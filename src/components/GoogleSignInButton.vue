@@ -1,13 +1,23 @@
 <script>
+    import { googleTokenLogin } from "vue3-google-login"
+
     export default {
         name: "GoogleSignInButton",
         methods: {
-            profileLoad: function() {
+            async profileLoad() {
                 const element = document.getElementById("google-signin")
 
                 if (!element.classList.contains("waiting")) {
                     element.classList.add("waiting")
+                    
+                    //reset the animation
+                    setTimeout(_ => {element.classList.remove("waiting")}, 5000)
+
                     // connect to google
+                    googleTokenLogin().then(response => {
+                        console.log(response);
+                    });
+
                 }
             }
         }
@@ -78,6 +88,7 @@ button.firebaseui-idp-google {
     transition: 0.2s all;
     cursor: pointer;
     font-family: Roboto, Helvetica, Arial, sans-serif;
+    width: 25%;
 }
 
 @media not all and (pointer: coarse) {
