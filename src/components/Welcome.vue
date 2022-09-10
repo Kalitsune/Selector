@@ -1,28 +1,27 @@
+<script setup>
+    import GoogleSignInButton from './GoogleSignInButton.vue';
+</script>
+
+
 <template>
-    <div id="rainbow"></div>
-    <div>
-        <img src="../assets/selector.svg" alt="Selector logo"/>
+    <div id="container">
+        <img id="logo" src="../assets/selector.svg" alt="Selector logo"/>
+        <GoogleSignInButton/>
     </div>
 
 </template>
 
-<script>
-</script>
-
 <style>
-    body {
-        background-color: v-bind(this.colors.background);
+
+    #container {
+        display: flex;
+        flex-direction: column;
+        margin-top: auto;
+        margin-bottom: auto;
     }
 
-    #rainbow {
-        background: linear-gradient(v-bind(this.colors.primary), v-bind(this.colors.secondary));
-        z-index: -999;
-
-        position: absolute;
-        width: 100vw;
-        height: 100vh;
-        left:0;
-        top: 0;
+    #logo  {
+        padding-bottom: 50px;
     }
 
 </style>

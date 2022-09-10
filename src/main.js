@@ -2,14 +2,15 @@ import { createApp } from 'vue'
 import './style.css'
 import App from './App.vue'
 
-
 let app = createApp(App)
 
-let colors = {
+let light_theme = {
     "primary": "#ff6700",
     "secondary": "#c4448c",
-    "background": "#2E2E2E"
+    "background": "#000000"
 }
-app.config.globalProperties.colors = colors
+
+app.config.globalProperties.$theme = light_theme
+
 
 app.mount('#app')
