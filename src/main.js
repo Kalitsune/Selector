@@ -5,7 +5,7 @@ import vue3GoogleLogin from 'vue3-google-login'
 let app = createApp(App)
 
 app.use(vue3GoogleLogin, {
-    clientId: import.meta.env.VITE_GOOGLE_CLIENT_ID
+    clientId: "90274449002-gfobidbm1l8aactuhve9gsdskc6iso6p.apps.googleusercontent.com"
 })
 
 let light_theme = {
@@ -15,6 +15,5 @@ let light_theme = {
 }
 
 app.config.globalProperties.$theme = light_theme
-
 
 app.mount('#app')

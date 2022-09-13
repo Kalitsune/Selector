@@ -9,11 +9,7 @@ cd selector/
 npm i
 ```
 
-set up a local environment (learn more [here](https://vitejs.dev/guide/env-and-mode.html))
-```
-cp .env .env.local
-nano .env.local
-```
+Create an oauth2 key from [google API](https://console.cloud.google.com/apis/credentials) and put the credentials.json on the backend root (you may have to rename the file)
 
 run selector
 ```

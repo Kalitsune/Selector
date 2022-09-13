@@ -1,18 +1,22 @@
 <script>
-    import { decodeCredential, googleOneTap } from 'vue3-google-login';
+    import { googleOneTap } from 'vue3-google-login';
     import GoogleSignInButton from './GoogleSignInButton.vue';
 
     export default {
-        async mounted() {
+        methods: {
+            callback(response){
+
+            }
+        },
+        mounted() {
             googleOneTap({ autoLogin: true })
             .then((response) => {
                 
-                const userData = decodeCredential(response)
-                console.log("data", userData)
-
-            }).catch(err => {
-                if (err === "Prompt was suppressed by user'. Refer https://developers.google.com/identity/gsi/web/guides/features#exponential_cooldown for more info"){ return; }
-            });
+                // This promise is resolved when user selects an account from the the One Tap prompt
+                console.log("Handle the response", response)
+            }).catch((error) => {
+                console.log("Handle the error", error)
+            })
         },
         components: { GoogleSignInButton }
     }

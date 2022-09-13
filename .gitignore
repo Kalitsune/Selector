@@ -84,3 +84,5 @@ typings/
 .dynamodb/
 
 *.local
+credentials.json
+backend/.idea/
