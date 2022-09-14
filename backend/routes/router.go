@@ -11,11 +11,12 @@ func Init(app *fiber.App) {
 		return c.SendString("Hello, World!")
 	})
 
-	//API routes
-	api := app.Group("/api")
-
 	//auth routes
-	auth := api.Group("/auth")
+	auth := app.Group("/auth")
 	auth.Get("/", handler.GoogleAuth)
 	auth.Get("/callback", handler.GoogleCallback)
+
+	//API routes
+	api := app.Group("/api")
+	api.Get("/lists", handler.GetLists)
 }
