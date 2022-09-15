@@ -19,5 +19,8 @@ func Init(app *fiber.App) {
 	//API routes
 	api := app.Group("/api")
 	api.Use(handler.ApiMiddleware)
-	api.Get("/lists", handler.GetLists)
+	api.Get("/lists", handler.GetList)
+	api.Post("/lists", handler.PostList)
+	api.Patch("/lists", handler.PatchList)
+	api.Delete("/lists", handler.DeleteList)
 }
