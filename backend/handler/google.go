@@ -3,7 +3,6 @@ package handler
 import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/kalitsune/selector/api"
-	"time"
 )
 
 // GoogleAuth is a handler for the /api/auth route.
@@ -34,7 +33,7 @@ func GoogleCallback(ctx *fiber.Ctx) error {
 		Name:     "token",
 		Value:    serializedToken,
 		HTTPOnly: true,
-		Expires:  time.Now().Add(time.Hour * 24 * 6),
+		Expires:  token.Expiry,
 	}
 	ctx.Cookie(cookie)
 
