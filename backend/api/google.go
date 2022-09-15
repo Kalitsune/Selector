@@ -5,6 +5,8 @@ import (
 	"context"
 	"encoding/base64"
 	"encoding/gob"
+	"encoding/json"
+	"github.com/kalitsune/selector/structures"
 	"golang.org/x/oauth2"
 	"google.golang.org/api/option"
 	"log"
@@ -77,4 +79,22 @@ func TokenDeserializer(str string) (*oauth2.Token, error) {
 	err = d.Decode(token)
 
 	return token, err
+}
+
+// IdToList returns a list from a Google Drive file ID
+func IdToList(srv *drive.Service, id string) (*structures.List, error) {
+	//get the JSON file from Google Drive
+	file, err := srv.Files.Get(id).Download()
+	if err != nil {
+		return &structures.List{}, err
+	}
+
+	//Unmarshal the JSON file to a list
+	var list structures.List
+	err = json.NewDecoder(file.Body).Decode(&list)
+	if err != nil {
+		return &structures.List{}, err
+	}
+
+	return &list, nil
 }
