@@ -62,6 +62,8 @@ paths:
 
         * the lists are only partially fetched, they do not include the list elements which will contain a "null" value instead
       parameters: []
+      security:
+        - token: []
     parameters: []
   '/api/list/{id}':
     get:
@@ -90,6 +92,8 @@ paths:
           description: Internal Server Error
       operationId: get-api-list
       description: Return a list with the associated ID
+      security:
+        - token: []
     parameters:
       - schema:
           type: string
@@ -142,6 +146,8 @@ paths:
                       properties: {}
                     - name: Rock
                       probability: 50
+      security:
+        - token: []
     delete:
       summary: ''
       operationId: delete-api-list-id
@@ -155,6 +161,8 @@ paths:
         '500':
           description: Internal Server Error
       description: Permanently delete a list with the corresponding ID
+      security:
+        - token: []
   /api/list:
     post:
       summary: ''
@@ -199,6 +207,8 @@ paths:
                       probability: 50
                       properties: {}
       description: Create a new list From a model
+      security:
+        - token: []
 components:
   schemas:
     List:
@@ -256,3 +266,4 @@ components:
       name: automatically created after successfully connecting to google (/auth)
       type: apiKey
       in: cookie
+      description: ''
