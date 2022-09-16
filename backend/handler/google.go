@@ -8,7 +8,7 @@ import (
 // GoogleAuth is a handler for the /api/auth route.
 func GoogleAuth(ctx *fiber.Ctx) error {
 	// redirect to the Google OAuth2 consent page
-	return ctx.Redirect(api.GetAuthUrl())
+	return ctx.Redirect(api.GetAuthUrl(), 308)
 }
 
 // GoogleCallback is a handler for the /api/auth/callback route.
