@@ -24,10 +24,7 @@
       },
       "icon": "robot",
       "color": "#3898ff",
-      "description": "Default rules for Stoplight projects",
-      "laMy ListRelease": {
-        "release": 35
-      }
+      "description": "Default rules for Stoplight projects"
     }
   ],
   "inheritedRules": [

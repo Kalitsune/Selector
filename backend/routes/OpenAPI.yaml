@@ -61,12 +61,7 @@ paths:
 
 
         * the lists are only partially fetched, they do not include the list elements which will contain a "null" value instead
-      parameters:
-        - schema:
-            type: string
-          in: query
-          name: id
-          description: the ID of your list (optional)
+      parameters: []
     parameters: []
   '/api/list/{id}':
     get:
