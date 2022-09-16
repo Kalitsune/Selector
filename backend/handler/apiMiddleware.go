@@ -9,10 +9,10 @@ import (
 //ApiMiddleware is a middleware that checks if the user is authenticated and deserialize the token
 func ApiMiddleware(ctx *fiber.Ctx) error {
 	//Get the token from the cookie
-	serialized_token := ctx.Cookies("token")
+	serializedToken := ctx.Cookies("token")
 
 	//if token is blank, the user need to authenticate
-	if serialized_token == "" {
+	if serializedToken == "" {
 		ctx.Status(fiber.StatusUnauthorized)
 		return ctx.JSON(fiber.Map{
 			"error": "invalid cookie",
@@ -20,7 +20,7 @@ func ApiMiddleware(ctx *fiber.Ctx) error {
 	}
 
 	//deserialize the token
-	token, err := api.TokenDeserializer(serialized_token)
+	token, err := api.TokenDeserializer(serializedToken)
 
 	//if there is an error or the token is nul, the user need to authenticate
 	if err != nil || token == nil || token.AccessToken == "" {
