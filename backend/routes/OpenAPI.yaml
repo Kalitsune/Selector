@@ -29,6 +29,17 @@ paths:
       operationId: get-auth-callback
       description: Only used by the google API and should not be used
       security: []
+  /auth/test:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Unauthorized
+      operationId: get-auth-test
+      description: Helps you verify that you're successfully authentificated
   /api/lists:
     get:
       summary: Your GET endpoint
