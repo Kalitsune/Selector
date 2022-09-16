@@ -34,7 +34,7 @@ func init() {
 
 // GetAuthUrl returns the URL to the Google OAuth2 consent page.
 func GetAuthUrl() string {
-	return config.AuthCodeURL("state-token", oauth2.AccessTypeOnline)
+	return config.AuthCodeURL("state-token", oauth2.AccessTypeOffline)
 }
 
 // CodeToToken exchanges a Google authorisation code for a token (read: https://developers.google.com/identity/protocols/oauth2)
