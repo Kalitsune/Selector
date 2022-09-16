@@ -250,10 +250,10 @@ components:
           name: My List
           elements: null
   securitySchemes:
-    token:
-      name: API Key
+    API Key:
       type: apiKey
       in: cookie
       description: Automatically created after successfuly connecting using /auth
+      name: token
 security:
   - token: []
