@@ -11,11 +11,6 @@ func GoogleAuth(ctx *fiber.Ctx) error {
 	return ctx.Redirect(api.GetAuthUrl(), 308)
 }
 
-//GoogleAuthTest is a handler for the /api/auth/test route. returns 200 if the user is authenticated
-func GoogleAuthTest(ctx *fiber.Ctx) error {
-	return ctx.SendStatus(200)
-}
-
 // GoogleCallback is a handler for the /api/auth/callback route.
 func GoogleCallback(ctx *fiber.Ctx) error {
 	// get the code from the query string

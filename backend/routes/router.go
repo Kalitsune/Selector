@@ -15,7 +15,6 @@ func Init(app *fiber.App) {
 	auth := app.Group("/auth")
 	auth.Get("/", handler.GoogleAuth)
 	auth.Get("/callback", handler.GoogleCallback)
-	auth.Get("/test", handler.ApiMiddleware, handler.GoogleAuthTest)
 
 	//API routes
 	api := app.Group("/api")
