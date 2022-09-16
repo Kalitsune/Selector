@@ -146,6 +146,10 @@ func PatchList(ctx *fiber.Ctx) error {
 	//update the file on Google Drive and handle potential errors
 	_, err = srv.Files.Update(list.Id, &drive.File{Name: list.Name}).Media(reader).Do()
 	if err != nil {
+		//handle 404 errors
+		if strings.HasPrefix(err.Error(), "googleapi: Error 404: File not found:") {
+			return fiber.ErrNotFound
+		}
 		return fiber.ErrInternalServerError
 	}
 
