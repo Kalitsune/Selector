@@ -75,7 +75,6 @@ func PostList(ctx *fiber.Ctx) error {
 	//get a Google Drive service and handle potential server errors
 	srv, err := api.TokenToDriveClientService(token)
 	if err != nil {
-		println("token2service error")
 		return fiber.ErrInternalServerError
 	}
 
@@ -174,6 +173,7 @@ func DeleteList(ctx *fiber.Ctx) error {
 		if strings.HasPrefix(err.Error(), "googleapi: Error 404: File not found:") {
 			return fiber.ErrNotFound
 		}
+
 		return fiber.ErrInternalServerError
 	}
 
