@@ -1,12 +1,11 @@
 import { createApp } from 'vue'
-import App from './App.vue'
+import vueCookies from 'vue-cookies'
+import index from './pages/index.vue'
 
-import vue3GoogleLogin from 'vue3-google-login'
-let app = createApp(App)
+let app = createApp(index)
 
-app.use(vue3GoogleLogin, {
-    clientId: "90274449002-gfobidbm1l8aactuhve9gsdskc6iso6p.apps.googleusercontent.com"
-})
+app.use(vueCookies)
+
 
 let light_theme = {
     "primary": "#ff6700",

@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "vue": "^3.2.37",
-    "vue3-google-login": "^2.0.12"
+    "vue-cookies": "^1.8.1"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^3.1.0",

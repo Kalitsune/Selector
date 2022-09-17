@@ -1,33 +1,19 @@
 <script>
-    import { googleTokenLogin } from "vue3-google-login"
-
     export default {
         name: "GoogleSignInButton",
-        methods: {
-            async profileLoad() {
-                const element = document.getElementById("google-signin")
-
-                if (!element.classList.contains("waiting")) {
-                    element.classList.add("waiting")
-                    
-                    //reset the animation
-                    setTimeout(_ => {element.classList.remove("waiting")}, 5000)
-
-                    // connect to google
-                    googleTokenLogin().then(response => {
-                        console.log(response);
-                    });
-
-                }
-            }
+        methods : {
+          signIn() {
+            // open a new window pointing to the Google login url
+            window.open('/auth', '_blank', 'location=yes,height=570,width=520,scrollbars=yes,status=yes');
         }
+      }
     }
     
 </script>
 
 
 <template>
-    <button class="firebaseui-idp-google flex-center--all noselect" id="google-signin" v-on:click="profileLoad" data-provider-id="google.com">
+    <button class="firebaseui-idp-google flex-center--all noselect" id="google-signin" v-on:click="signIn" data-provider-id="google.com">
 
         <span class="firebaseui-idp-icon-wrapper">
             <img class="firebaseui-idp-icon" alt="" src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg">
