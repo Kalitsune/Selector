@@ -1,6 +1,7 @@
 import { createApp } from 'vue'
 import vueCookies from 'vue-cookies'
 import index from './pages/index.vue'
+import IndexCss from './index.css'
 
 let app = createApp(index)
 
