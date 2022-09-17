@@ -9,7 +9,7 @@ cd selector/
 npm i
 ```
 
-Create an oauth2 key from [google API](https://console.cloud.google.com/apis/credentials) and put the credentials.json on the backend root (you may have to rename the file)
+Create an oauth2 key from [google API](https://console.cloud.google.com/apis/credentials) and put the credentials.json in the backend root (you may have to rename the file)
 
 run selector
 ```
