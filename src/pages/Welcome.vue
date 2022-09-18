@@ -8,8 +8,9 @@
 
 <template>
     <div id="container">
-        <img id="logo" src="../assets/selector.svg" alt="Selector logo"/>
-        <GoogleSignInButton/>
+        <img class="logo" id="logo-dark" src="../assets/selector-dark.svg" alt="Selector logo"/>
+        <img class="logo" id="logo-light" src="../assets/selector.svg" alt="Selector logo"/>
+      <GoogleSignInButton/>
     </div>
 </template>
 
@@ -23,9 +24,23 @@
         transform: translateY(-50%);
     }
 
-    #logo  {
-        padding-bottom: 50px;
-        width: 50vw;
+    .logo  {
+      padding-bottom: 50px;
+      padding-left: 25vw;
+      padding-right: 25vw;
     }
+
+    .dark #logo-light {
+        display: none;
+    }
+
+    .dark #logo-dark {
+      display: block;
+    }
+
+    #logo-dark {
+      display: none;
+    }
+
 
 </style>

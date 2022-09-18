@@ -13,15 +13,18 @@
 
 
 <template>
-    <button class="firebaseui-idp-google flex-center--all noselect" id="google-signin" v-on:click="signIn" data-provider-id="google.com">
+    <button class="firebaseui-idp-google flex-center--all noselect md:w-1/4 w-1/2 bg-white dark:bg-neutral-700" id="google-signin" v-on:click="signIn" data-provider-id="google.com">
 
-        <span class="firebaseui-idp-icon-wrapper">
+        <span class="firebaseui-idp-icon-wrapper bg-white p-1.5 rounded">
             <img class="firebaseui-idp-icon" alt="" src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg">
         </span>
 
-        <span class="firebaseui-idp-text firebaseui-idp-text-long">
+        <span class="firebaseui-idp-text hidden xl:block dark:text-white">
             Se connecter avec Google
-        </span>  
+        </span>
+        <span class="firebaseui-idp-text block xl:hidden dark:text-white">
+             Connexion
+        </span>
     </button>
 </template>
 
@@ -63,7 +66,6 @@
 
 button.firebaseui-idp-google {
     padding: 12px 20px;
-    background: white;
     border: 0;
     border-radius: 99rem;
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
@@ -74,7 +76,6 @@ button.firebaseui-idp-google {
     transition: 0.2s all;
     cursor: pointer;
     font-family: Roboto, Helvetica, Arial, sans-serif;
-    width: 25%;
 }
 
 @media not all and (pointer: coarse) {
@@ -113,17 +114,7 @@ button.firebaseui-idp-google .firebaseui-idp-text {
     transition: 0.3s height width;
 }
 button.firebaseui-idp-google .firebaseui-idp-icon-wrapper {
-    height: 25px;
-    width: 25px;
-}
-
-@media (max-width: 600px) {
-    button.firebaseui-idp-google .firebaseui-idp-icon-wrapper {
-        height: 50px;
-        width: 50px;
-    }
-    button.firebaseui-idp-google .firebaseui-idp-text-long {
-        display: none;
-    }
+    height: 40px;
+    width: 40px;
 }
 </style>
