@@ -5,7 +5,7 @@
     <span class="w-72 left-0 top-0 flex flex-row justify-evenly">
       <!-- Trigger for the sidebar -->
       <button @click="$emit('toggleSidebar')">
-        <font-awesome-icon class="self-center h-7" icon="fa-solid fa-bars" />
+        <font-awesome-icon icon="fa-solid fa-bars" class="align-middle h-7" />
       </button>
 
       <!-- logo, dark & light -->
