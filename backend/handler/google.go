@@ -30,10 +30,9 @@ func GoogleCallback(ctx *fiber.Ctx) error {
 
 	//store the cookie
 	cookie := &fiber.Cookie{
-		Name:     "token",
-		Value:    serializedToken,
-		HTTPOnly: true,
-		Expires:  token.Expiry,
+		Name:    "token",
+		Value:   serializedToken,
+		Expires: token.Expiry,
 	}
 	ctx.Cookie(cookie)
 
