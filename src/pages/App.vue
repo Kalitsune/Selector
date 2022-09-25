@@ -4,8 +4,8 @@
 </template>
 
 <script>
-import Sidebar from "../components/sidebar.vue";
-import Topbar from "../components/topbar.vue";
+import Sidebar from "../components/Sidebar.vue";
+import Topbar from "../components/Topbar.vue";
 
 export default {
   name: "App",
@@ -15,7 +15,7 @@ export default {
     },
     sidebarDefaultValue() {
       //check if the device has medium height
-      return window.innerWidth > 768;
+      return window.innerWidth < 1024;
     },
   },
   data() {

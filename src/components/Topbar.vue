@@ -11,13 +11,13 @@
       <!-- logo, dark & light -->
       <span class="pr-5 pl-5 md:pl-2">
         <!--big logos-->
-        <span class="hidden md:block">
+        <span class="hidden sm:block">
           <img class="dark:block hidden h-9 self-center" src="../assets/selector-dark.svg" alt="@Selector" />
           <img class="dark:hidden block h-9 self-center" src="../assets/selector.svg" alt="@Selector" />
         </span>
 
         <!--short logos-->
-        <span class="block md:hidden">
+        <span class="block sm:hidden">
           <img class="dark:block hidden h-9 self-center" src="../assets/selector-short-dark.svg" alt="@Selector" />
           <img class="dark:hidden block h-9 self-center" src="../assets/selector-short.svg" alt="@Selector" />
         </span>
