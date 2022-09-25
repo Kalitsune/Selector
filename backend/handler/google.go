@@ -36,6 +36,7 @@ func GoogleCallback(ctx *fiber.Ctx) error {
 	}
 	ctx.Cookie(cookie)
 
-	// redirect to the home page
-	return ctx.Redirect("/")
+	// load the callback page
+	ctx.Set(fiber.HeaderContentType, fiber.MIMETextHTML)
+	return ctx.SendString("<p>Success! You'll soon be redirected.</p><script>window.opener.postMessage('success', '*')</script>")
 }

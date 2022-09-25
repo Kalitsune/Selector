@@ -4,9 +4,22 @@
         methods : {
           signIn() {
             // open a new window pointing to the Google login url
-            window.open('/auth', '_blank', 'location=yes,height=570,width=520,scrollbars=yes,status=yes');
+            let win = window.open('/auth', '_blank', 'location=yes,height=570,width=520,scrollbars=yes,status=yes');
+            // listen for the success event
+            window.addEventListener('message', (event) => {
+              // check if the event is coming from the correct origin
+              if (event.source === win) {
+                // check if the event is the success event
+                if (event.data === 'success') {
+                  // close the window
+                  win.close();
+                  // reload the page
+                  window.location.reload();
+                }
+              }
+            });
+          }
         }
-      }
     }
     
 </script>
