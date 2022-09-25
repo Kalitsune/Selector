@@ -13,10 +13,14 @@ export default {
     toggleSidebar() {
       this.sidebarCollapsed = !this.sidebarCollapsed;
     },
+    sidebarDefaultValue() {
+      //check if the device has medium height
+      return window.innerWidth > 768;
+    },
   },
   data() {
     return {
-      sidebarCollapsed: false,
+      sidebarCollapsed: this.sidebarDefaultValue()
     };
   },
   components: {Topbar, Sidebar }
