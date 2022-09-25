@@ -51,9 +51,9 @@ export default {
 }
 
 .sidebar.fullscreen {
-  @apply block w-screen bg-neutral-100 dark:bg-neutral-800;
+  @apply w-screen bg-neutral-100 dark:bg-neutral-800 opacity-100;
 }
 .collapsed.sidebar.fullscreen {
-  @apply hidden;
+  @apply translate-y-full opacity-0;
 }
 </style>
