@@ -1,26 +1,53 @@
 <template>
   <div :class="{'collapsed': collapsed, 'fullscreen': fullscreen}" class="sidebar">
-    Hello
+    <ul>
+      <li v-if="lists.length > 0" v-for="list in lists">
+        <ListButton :list="list" :disabled="isDisabled(list)" :selected="isSelected(list)"/>
+      </li>
+      <li v-else>
+        <ListButton :list="{ name: 'There\'s no list to show!', id: 0}" disabled/>
+      </li>
+    </ul>
   </div>
+
 </template>
 
 <script>
 
+import ListButton from "./ListButton.vue";
 export default {
   name: "Sidebar",
+  components: {ListButton},
   methods: {
     isFullscreen() {
-      return window.innerWidth < 768;
+      return window.innerWidth < 	1024;
     },
     onResize() {
       //handle resize operation
       this.fullscreen = this.isFullscreen();
+    },
+    isSelected(list) {
+      //check if the provided element is currently selected
+      if (this.selected.id != null) {
+        return this.selected.id === list.id;
+      } else {
+        //fallback to the name
+        return this.selected.name === list.name;
+      }
+    },
+    isDisabled(list) {
+      //check if the provided element is currently disabled
+      return list.id === 0;
     }
   },
   props: {
     collapsed: {
       type: Boolean,
       default: false,
+    },
+    lists: {
+      type: Array,
+      default: [],
     },
   },
   mounted() {
@@ -31,7 +58,8 @@ export default {
   },
   data() {
     return {
-      fullscreen: this.isFullscreen()
+      fullscreen: this.isFullscreen(),
+      selected: this.lists[0],
     };
   },
 };
