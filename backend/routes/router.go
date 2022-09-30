@@ -2,6 +2,7 @@ package routes
 
 import (
 	"github.com/gofiber/fiber/v2"
+	"github.com/kalitsune/selector/api"
 	"github.com/kalitsune/selector/handler"
 )
 
@@ -27,4 +28,5 @@ func Init(app *fiber.App) {
 	apiRoutes.Patch("/list/:id", handler.PatchList)
 	apiRoutes.Delete("/list/:id", handler.DeleteList)
 
+	api.Logger.Info.Println("Routes initialized!")
 }

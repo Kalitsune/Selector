@@ -88,3 +88,5 @@ backend/credentials.json
 backend/.idea/
 
 .idea/
+
+backend/logs.txt

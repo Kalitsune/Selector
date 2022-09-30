@@ -8,29 +8,12 @@ import (
 	"encoding/json"
 	"github.com/kalitsune/selector/structures"
 	"golang.org/x/oauth2"
-	"google.golang.org/api/option"
-	"log"
-	"net/http"
-	"os"
-
-	"golang.org/x/oauth2/google"
 	"google.golang.org/api/drive/v3"
+	"google.golang.org/api/option"
+	"net/http"
 )
 
 var config = &oauth2.Config{}
-
-func init() {
-	b, err := os.ReadFile("credentials.json")
-	if err != nil {
-		log.Fatalf("Unable to read client secret file: %v", err)
-	}
-
-	// If modifying these scopes, delete your previously saved token.json.
-	config, err = google.ConfigFromJSON(b, drive.DriveAppdataScope)
-	if err != nil {
-		log.Fatalf("Unable to parse client secret file to config: %v", err)
-	}
-}
 
 // GetAuthUrl returns the URL to the Google OAuth2 consent page.
 func GetAuthUrl() string {
@@ -84,6 +67,7 @@ func TokenDeserializer(str string) (*oauth2.Token, error) {
 // IdToList returns a list from a Google Drive file ID
 func IdToList(srv *drive.Service, id string) (*structures.List, error) {
 	//get the JSON file from Google Drive
+	Logger.Info.Printf("Downloading file [%s] from Google Drive", id)
 	file, err := srv.Files.Get(id).Download()
 	if err != nil {
 		return &structures.List{}, err
@@ -93,6 +77,7 @@ func IdToList(srv *drive.Service, id string) (*structures.List, error) {
 	var list structures.List
 	err = json.NewDecoder(file.Body).Decode(&list)
 	if err != nil {
+		Logger.Error.Printf("Error while unmarshalling file [%s] from Google Drive: %v", id, err)
 		return &structures.List{}, err
 	}
 
