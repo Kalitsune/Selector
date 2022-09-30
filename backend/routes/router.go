@@ -17,13 +17,14 @@ func Init(app *fiber.App) {
 	auth.Get("/callback", handler.GoogleCallback)
 
 	//API routes
-	api := app.Group("/api")
-	api.Use(handler.ApiMiddleware)
+	apiRoutes := app.Group("/api")
+	apiRoutes.Use(handler.ApiMiddleware)
 
-	api.Get("/lists", handler.GetLists)
+	apiRoutes.Get("/lists", handler.GetLists)
+	apiRoutes.Post("/lists", handler.PostList)
 
-	api.Get("/list/:id", handler.GetList)
-	api.Post("/list/", handler.PostList)
-	api.Patch("/list/:id", handler.PatchList)
-	api.Delete("/list/:id", handler.DeleteList)
+	apiRoutes.Get("/list/:id", handler.GetList)
+	apiRoutes.Patch("/list/:id", handler.PatchList)
+	apiRoutes.Delete("/list/:id", handler.DeleteList)
+
 }
