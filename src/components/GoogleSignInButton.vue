@@ -4,7 +4,7 @@
         methods : {
           signIn() {
             // open a new window pointing to the Google login url
-            let win = window.open('/auth', '_blank', 'location=yes,height=570,width=520,scrollbars=yes,status=yes');
+            let win = window.open('/auth', '_blank', 'location=yes,height=570,width=520,scrollbars=yes,status=yes,left=' + (screen.width - 570)/2  + ',top=' + (screen.height - 520)/2);
             // listen for the success event
             window.addEventListener('message', (event) => {
               // check if the event is coming from the correct origin
