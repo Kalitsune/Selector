@@ -20,7 +20,7 @@ export default {
   },
   data() {
     return {
-      sidebarCollapsed: this.sidebarDefaultValue()
+      sidebarCollapsed: this.sidebarDefaultValue(),
     };
   },
   components: {Topbar, Sidebar }

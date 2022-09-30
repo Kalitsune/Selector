@@ -15,6 +15,7 @@
 <script>
 
 import ListButton from "./ListButton.vue";
+import api from "../api.js";
 export default {
   name: "Sidebar",
   components: {ListButton},
@@ -45,13 +46,16 @@ export default {
       type: Boolean,
       default: false,
     },
-    lists: {
-      type: Array,
-      default: [],
-    },
   },
   mounted() {
+    //handle screen resizing
     window.addEventListener('resize', this.onResize);
+
+    //get the lists from the api
+    api.getLists().then((lists) => {
+      this.selected = lists[0]
+      this.lists = lists;
+    });
   },
   unmounted() {
     window.removeEventListener('resize', this.onResize);
@@ -59,7 +63,8 @@ export default {
   data() {
     return {
       fullscreen: this.isFullscreen(),
-      selected: this.lists[0],
+      lists: [],
+      selected: {},
     };
   },
 };
