@@ -52,6 +52,12 @@ paths:
                   $ref: '#/components/schemas/PartialList'
         '401':
           description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+        '429':
+          description: Too Many Requests
         '500':
           description: Internal Server Error
       operationId: get-api-lists
@@ -61,6 +67,35 @@ paths:
         /!\ the lists are only partially fetched, they do not include the list elements which will contain a "null" value instead
       parameters: []
     parameters: []
+    post:
+      summary: ''
+      operationId: post-api-lists
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/List'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+        '429':
+          description: Too Many Requests
+        '500':
+          description: Internal Server Error
+      description: Create a new list From a model
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/List'
+        description: 'If an "id" field is provided, it will be overriden.'
   '/api/list/{id}':
     get:
       summary: List related
@@ -165,56 +200,6 @@ paths:
         '500':
           description: Internal Server Error
       description: Permanently delete a list with the corresponding ID
-  /api/list:
-    post:
-      summary: Create list
-      operationId: post-api-list
-      responses:
-        '201':
-          description: Created
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/List'
-                x-examples:
-                  example-1:
-                    id: A fantastic ID
-                    name: My List
-                    elements:
-                      - name: Paper
-                        probability: 100
-                        properties: {}
-                      - name: Rock
-                        probability: 50
-                        properties: {}
-        '400':
-          description: Bad Request
-        '401':
-          description: Unauthorized
-        '403':
-          description: Forbidden
-        '404':
-          description: Not Found
-        '429':
-          description: Too Many Requests
-        '500':
-          description: Internal Server Error
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/List'
-              x-examples:
-                example-1:
-                  name: My List
-                  elements:
-                    - name: Paper
-                      probability: 100
-                      properties: {}
-                    - name: Rock
-                      probability: 50
-                      properties: {}
-      description: Create a new list From a model
 components:
   schemas:
     List:
