@@ -10,17 +10,17 @@ import (
 	"strings"
 )
 
-func returnFileContent(ctx *fiber.Ctx, srv *drive.Service, fileid string) error {
+func returnFileContent(ctx *fiber.Ctx, srv *drive.Service, fileId string) error {
 
-	list, err := api.IdToList(srv, fileid)
+	list, err := api.IdToList(srv, fileId)
 	if err != nil {
-		return handleErrors(ctx, err)
+		return handleErrors(err)
 	}
 
 	return ctx.JSON(list)
 }
 
-func handleErrors(ctx *fiber.Ctx, err error) error {
+func handleErrors(err error) error {
 	//handle 404 errors
 	if strings.HasPrefix(err.Error(), "googleapi: Error 404: File not found:") {
 		return fiber.ErrNotFound
@@ -64,7 +64,7 @@ func GetLists(ctx *fiber.Ctx) error {
 	//get the list of files
 	fileList, err := srv.Files.List().Spaces("appDataFolder").Do()
 	if err != nil {
-		return handleErrors(ctx, err)
+		return handleErrors(err)
 	}
 
 	//convert the Google Drive files to lists
@@ -126,7 +126,7 @@ func PostList(ctx *fiber.Ctx) error {
 	//save the file in the user's Google Drive and handle potential errors
 	file, err = srv.Files.Create(file).Media(reader).Do()
 	if err != nil {
-		return handleErrors(ctx, err)
+		return handleErrors(err)
 	}
 
 	list.Id = file.Id
@@ -135,7 +135,7 @@ func PostList(ctx *fiber.Ctx) error {
 	reader = bytes.NewReader(listData)
 	_, err = srv.Files.Update(list.Id, &drive.File{}).Media(reader).Do()
 	if err != nil {
-		return handleErrors(ctx, err)
+		return handleErrors(err)
 	}
 
 	ctx.Status(fiber.StatusCreated)
@@ -173,7 +173,7 @@ func PatchList(ctx *fiber.Ctx) error {
 	//update the file on Google Drive and handle potential errors
 	_, err = srv.Files.Update(list.Id, &drive.File{Name: list.Name}).Media(reader).Do()
 	if err != nil {
-		return handleErrors(ctx, err)
+		return handleErrors(err)
 	}
 
 	return ctx.JSON(list)
@@ -193,7 +193,7 @@ func DeleteList(ctx *fiber.Ctx) error {
 	//delete the file from Google Drive and handle potential errors
 	err = srv.Files.Delete(id).Do()
 	if err != nil {
-		return handleErrors(ctx, err)
+		return handleErrors(err)
 	}
 
 	return ctx.SendStatus(fiber.StatusOK)
