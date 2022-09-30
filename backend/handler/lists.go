@@ -14,13 +14,40 @@ func returnFileContent(ctx *fiber.Ctx, srv *drive.Service, fileid string) error 
 
 	list, err := api.IdToList(srv, fileid)
 	if err != nil {
-		if strings.HasPrefix(err.Error(), "googleapi: Error 404: File not found:") {
-			return fiber.ErrNotFound
-		}
-		return fiber.ErrInternalServerError
+		return handleErrors(ctx, err)
 	}
 
 	return ctx.JSON(list)
+}
+
+func handleErrors(ctx *fiber.Ctx, err error) error {
+	//handle 404 errors
+	if strings.HasPrefix(err.Error(), "googleapi: Error 404: File not found:") {
+		return fiber.ErrNotFound
+	}
+
+	//handle invalid credentials errors
+	if strings.HasPrefix(err.Error(), "googleapi: Error 401: Invalid Credentials") {
+		return fiber.ErrUnauthorized
+	}
+
+	//handle rate limit errors
+	if strings.HasPrefix(err.Error(), "googleapi: Error 403: User Rate Limit Exceeded") ||
+		strings.HasPrefix(err.Error(), "googleapi: Error 429: Too Many Requests") {
+		return fiber.ErrTooManyRequests
+	}
+
+	//handle storage quota errors
+	if strings.HasPrefix(err.Error(), "googleapi: Error 403: Storage quota exceeded") {
+
+	}
+
+	//handle unauthorized errors
+	if strings.HasPrefix(err.Error(), "googleapi: Error 403: The caller does not have permission") {
+		return fiber.ErrForbidden
+	}
+
+	return fiber.ErrInternalServerError
 }
 
 // GetLists is a handler for the /api/lists route that returns an array of the lists
@@ -37,7 +64,7 @@ func GetLists(ctx *fiber.Ctx) error {
 	//get the list of files
 	fileList, err := srv.Files.List().Spaces("appDataFolder").Do()
 	if err != nil {
-		return fiber.ErrInternalServerError
+		return handleErrors(ctx, err)
 	}
 
 	//convert the Google Drive files to lists
@@ -99,7 +126,7 @@ func PostList(ctx *fiber.Ctx) error {
 	//save the file in the user's Google Drive and handle potential errors
 	file, err = srv.Files.Create(file).Media(reader).Do()
 	if err != nil {
-		return fiber.ErrInternalServerError
+		return handleErrors(ctx, err)
 	}
 
 	list.Id = file.Id
@@ -108,9 +135,10 @@ func PostList(ctx *fiber.Ctx) error {
 	reader = bytes.NewReader(listData)
 	_, err = srv.Files.Update(list.Id, &drive.File{}).Media(reader).Do()
 	if err != nil {
-		return fiber.ErrInternalServerError
+		return handleErrors(ctx, err)
 	}
 
+	ctx.Status(fiber.StatusCreated)
 	return ctx.JSON(list)
 }
 
@@ -145,11 +173,7 @@ func PatchList(ctx *fiber.Ctx) error {
 	//update the file on Google Drive and handle potential errors
 	_, err = srv.Files.Update(list.Id, &drive.File{Name: list.Name}).Media(reader).Do()
 	if err != nil {
-		//handle 404 errors
-		if strings.HasPrefix(err.Error(), "googleapi: Error 404: File not found:") {
-			return fiber.ErrNotFound
-		}
-		return fiber.ErrInternalServerError
+		return handleErrors(ctx, err)
 	}
 
 	return ctx.JSON(list)
@@ -169,12 +193,7 @@ func DeleteList(ctx *fiber.Ctx) error {
 	//delete the file from Google Drive and handle potential errors
 	err = srv.Files.Delete(id).Do()
 	if err != nil {
-		//handle 404 errors
-		if strings.HasPrefix(err.Error(), "googleapi: Error 404: File not found:") {
-			return fiber.ErrNotFound
-		}
-
-		return fiber.ErrInternalServerError
+		return handleErrors(ctx, err)
 	}
 
 	return ctx.SendStatus(fiber.StatusOK)
