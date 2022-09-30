@@ -13,7 +13,7 @@ paths:
   /auth:
     parameters: []
     get:
-      summary: Get User Info by User ID
+      summary: Auth
       tags: []
       responses:
         '308':
@@ -23,7 +23,7 @@ paths:
       security: []
   /auth/callback:
     get:
-      summary: Your GET endpoint
+      summary: Auth Callback
       tags: []
       responses: {}
       operationId: get-auth-callback
@@ -31,7 +31,7 @@ paths:
       security: []
   /api/lists:
     get:
-      summary: Your GET endpoint
+      summary: Get all the lists
       tags: []
       responses:
         '200':
@@ -63,7 +63,7 @@ paths:
     parameters: []
   '/api/list/{id}':
     get:
-      summary: Your GET endpoint
+      summary: List related
       tags: []
       responses:
         '200':
@@ -82,8 +82,12 @@ paths:
                         properties: {}
         '401':
           description: Unauthorized
+        '403':
+          description: Forbidden
         '404':
           description: Not Found
+        '429':
+          description: Too Many Requests
         '500':
           description: Internal Server Error
       operationId: get-api-list
@@ -120,8 +124,12 @@ paths:
           description: Bad Request
         '401':
           description: Unauthorized
+        '403':
+          description: Forbidden
         '404':
           description: Not Found
+        '429':
+          description: Too Many Requests
         '500':
           description: Internal Server Error
       description: Updates an existing list with the provided body
@@ -148,18 +156,22 @@ paths:
           description: OK
         '401':
           description: Unauthorized
+        '403':
+          description: Forbidden
         '404':
           description: Not Found
+        '429':
+          description: Too Many Requests
         '500':
           description: Internal Server Error
       description: Permanently delete a list with the corresponding ID
   /api/list:
     post:
-      summary: ''
+      summary: Create list
       operationId: post-api-list
       responses:
-        '200':
-          description: OK
+        '201':
+          description: Created
           content:
             application/json:
               schema:
@@ -179,6 +191,12 @@ paths:
           description: Bad Request
         '401':
           description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+        '429':
+          description: Too Many Requests
         '500':
           description: Internal Server Error
       requestBody:
