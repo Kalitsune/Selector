@@ -1,5 +1,5 @@
 <template>
-  <button @click="switchList" :class="{selected: isSelected, disabled: disabled}" id="button-bg" class="w-full py-4 pl-5 flex flex-row space-x-2">
+  <button @click="switchList" :class="{selected: isSelected, disabled: disabled}" id="button-bg" class="w-11/12 rounded-r-2xl py-4 pl-5 flex flex-row space-x-2">
     <font-awesome-icon class="list-element h-6" icon="fa-solid fa-list-ul"/>
     <span class="list-element h-7">{{list.name}}</span>
   </button>
