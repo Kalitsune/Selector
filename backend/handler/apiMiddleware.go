@@ -6,16 +6,17 @@ import (
 	"time"
 )
 
-//ApiMiddleware is a middleware that checks if the user is authenticated and deserialize the token
+// ApiMiddleware is a middleware that checks if the user is authenticated and deserialize the token
 func ApiMiddleware(ctx *fiber.Ctx) error {
 	//Get the token from the cookie
 	serializedToken := ctx.Cookies("token")
 
 	//if token is blank, the user need to authenticate
 	if serializedToken == "" {
+		api.Logger.Warning.Println("a request has been canceled: No cookie")
 		ctx.Status(fiber.StatusUnauthorized)
 		return ctx.JSON(fiber.Map{
-			"error": "invalid cookie",
+			"error": "no cookie",
 		})
 	}
 
@@ -24,6 +25,8 @@ func ApiMiddleware(ctx *fiber.Ctx) error {
 
 	//if there is an error or the token is nul, the user need to authenticate
 	if err != nil || token == nil || token.AccessToken == "" {
+		api.Logger.Warning.Println("a request has been canceled: invalid cookie")
+
 		ctx.Status(fiber.StatusUnauthorized)
 		return ctx.JSON(fiber.Map{
 			"error": "invalid cookie",
@@ -32,6 +35,8 @@ func ApiMiddleware(ctx *fiber.Ctx) error {
 
 	//check if the token is expired
 	if token.Expiry.Before(time.Now()) {
+		api.Logger.Warning.Println("a request has been canceled: token is expired")
+
 		ctx.Status(fiber.StatusUnauthorized)
 		return ctx.JSON(fiber.Map{
 			"error": "token expired, please login again",
