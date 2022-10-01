@@ -40,7 +40,7 @@ func handleErrors(err error) error {
 
 	//handle storage quota errors
 	if strings.HasPrefix(err.Error(), "googleapi: Error 403: Storage quota exceeded") {
-
+		return fiber.ErrInsufficientStorage
 	}
 
 	//handle unauthorized errors
@@ -87,7 +87,7 @@ func GetList(ctx *fiber.Ctx) error {
 	token := ctx.Locals("token").(*oauth2.Token) // get the token unmarshalled in the api/apiMiddleware.go file
 
 	id := ctx.Params("id")
-	api.Logger.Info.Println("handling GET request to /api/list/%s", id)
+	api.Logger.Info.Printf("handling GET request to /api/list/%s", id)
 
 	//get a Google Drive service
 	srv, err := api.TokenToDriveClientService(token)
@@ -136,7 +136,7 @@ func PostList(ctx *fiber.Ctx) error {
 	if err != nil {
 		return handleErrors(err)
 	}
-	api.Logger.Info.Println("handling POST request to /api/lists - created file with id: %s", file.Id)
+	api.Logger.Info.Printf("handling POST request to /api/lists - created file with id: %s", file.Id)
 
 	list.Id = file.Id
 
@@ -146,7 +146,7 @@ func PostList(ctx *fiber.Ctx) error {
 	if err != nil {
 		return handleErrors(err)
 	}
-	api.Logger.Info.Println("handling POST request to /api/lists - updated file with id: %s", file.Id)
+	api.Logger.Info.Printf("handling POST request to /api/lists - updated file with id: %s", file.Id)
 
 	ctx.Status(fiber.StatusCreated)
 	return ctx.JSON(list)
@@ -157,7 +157,7 @@ func PatchList(ctx *fiber.Ctx) error {
 	// init the vars
 	token := ctx.Locals("token").(*oauth2.Token) // get the token unmarshalled in the api/apiMiddleware.go file
 	id := ctx.Params("id")
-	api.Logger.Info.Println("handling PATCH request to /api/list/%s", id)
+	api.Logger.Info.Printf("handling PATCH request to /api/list/%s", id)
 
 	//get a Google Drive service and handle potential server errors
 	srv, err := api.TokenToDriveClientService(token)
@@ -188,7 +188,7 @@ func PatchList(ctx *fiber.Ctx) error {
 		return handleErrors(err)
 	}
 
-	api.Logger.Info.Println("handling PATCH request to /api/list/%s - updated file with id: %s", id, list.Id)
+	api.Logger.Info.Printf("handling PATCH request to /api/list/%s - updated file with id: %s", id, list.Id)
 
 	return ctx.JSON(list)
 }
@@ -198,7 +198,7 @@ func DeleteList(ctx *fiber.Ctx) error {
 	// init the vars
 	token := ctx.Locals("token").(*oauth2.Token) // get the token unmarshalled in the api/apiMiddleware.go file
 	id := ctx.Params("id")
-	api.Logger.Info.Println("handling DELETE request to /api/list/%s", id)
+	api.Logger.Info.Printf("handling DELETE request to /api/list/%s", id)
 
 	//get a Google Drive service and handle potential server errors
 	srv, err := api.TokenToDriveClientService(token)
@@ -212,7 +212,7 @@ func DeleteList(ctx *fiber.Ctx) error {
 		return handleErrors(err)
 	}
 
-	api.Logger.Info.Println("handling DELETE request to /api/list/%s - deleted file with id: %s", id, id)
+	api.Logger.Info.Printf("handling DELETE request to /api/list/%s - deleted file with id: %s", id, id)
 
 	return ctx.SendStatus(fiber.StatusOK)
 }
