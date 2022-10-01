@@ -1,6 +1,6 @@
 <template>
   <!-- topbar -->
-  <span class="left-0 top-0 py-5 w-screen bg-neutral-50 dark:bg-neutral-700 flex flex-row">
+  <span class="left-0 top-0 py-6 w-screen bg-neutral-50 dark:bg-neutral-700 flex flex-row">
     <!-- logo area -->
     <span class="w-25 md:w-72 left-0 top-0 flex flex-row justify-evenly pl-5 md:pl-0">
       <!-- Trigger for the sidebar -->

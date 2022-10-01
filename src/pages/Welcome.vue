@@ -10,7 +10,7 @@
         api.getLists().then(lists => {
           if (lists.constructor === Array) {
             //redirect to the app page
-            this.$router.push({name: "app", params: {listId: lists[0].id, mode: "view"}});
+            this.$router.push({name: "app", params: {listId: this.$route.query.listId, mode: this.$route.query.mode}});
           }
         }).catch(() => {});
       }

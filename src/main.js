@@ -19,9 +19,8 @@ let app = createApp(Index)
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
     routes: [
-        { name:"login", path: '/', component: Welcome },
-        { name: "app", path: '/app/', component: App},
-        { name: "app", path: '/app/:mode/:listId/', component: App},
+        { name:"login", path: '/', component: Welcome},
+        { name: "app", path: '/app/:mode?/:listId?/', component: App},
         { name: "404",path: '/:pathMatch(.*)*', redirect: '/' }
     ]
 })

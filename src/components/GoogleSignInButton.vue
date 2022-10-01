@@ -14,7 +14,7 @@
                   // close the window
                   win.close();
                   // redirect to the app
-                  this.$router.push({name: 'app'});
+                  this.$router.push({name: "app", params: {listId: this.$route.query.listId, mode: this.$route.query.mode}});
                 }
               }
             });
