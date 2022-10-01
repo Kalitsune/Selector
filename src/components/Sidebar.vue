@@ -59,7 +59,7 @@ export default {
 
 <style scoped>
 .sidebar {
-  @apply left-0 bottom-0 h-full transition-all ease-in-out duration-500 flex flex-col
+  @apply left-0 top-0 h-full transition-all ease-in-out duration-500 flex flex-col overflow-y-scroll
 }
 
 .sidebar:not(.fullscreen) {
@@ -67,7 +67,6 @@ export default {
 }
 .collapsed.sidebar:not(.fullscreen) {
   @apply -translate-x-full;
-;
 }
 
 .sidebar.fullscreen {
