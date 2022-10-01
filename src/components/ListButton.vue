@@ -36,17 +36,17 @@ export default {
 }
 
 .selected#button-bg, .selected#button-bg:hover {
-  @apply bg-primary-light-100 dark:bg-primary-dark-800;
+  @apply bg-primary-light-100 dark:bg-neutral-900 dark:bg-opacity-30;
 }
 
 #button-bg:hover {
-  @apply bg-primary-light-50 dark:bg-primary-dark-900;
+  @apply bg-primary-light-50 dark:bg-neutral-800 dark:bg-opacity-30;
 }
 
 .selected .list-element {
   @apply text-primary-light-500 dark:text-primary-dark-700;
 }
 .list-element {
-  @apply align-middle text-accent-400 dark:text-accent-600;
+  @apply align-middle text-accent-400 dark:text-accent-500;
 }
 </style>

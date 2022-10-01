@@ -1,5 +1,7 @@
 <template>
-  <router-view/>
+  <div class="h-screen w-screen bg-neutral-100 dark:bg-neutral-800">
+    <router-view />
+  </div>
 </template>
 
 <script>
