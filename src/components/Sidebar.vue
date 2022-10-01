@@ -2,7 +2,7 @@
   <div :class="{'collapsed': collapsed, 'fullscreen': fullscreen}" class="sidebar">
     <ul>
       <li v-if="lists.length > 0" v-for="list in lists">
-        <ListButton :list="list" :disabled="isDisabled(list)" :isSelected="isSelected(list)" @switchList="switchList"/>
+        <ListButton :list="list" :disabled="isDisabled(list)" :isSelected="isSelected(list)"/>
       </li>
       <li v-else>
         <ListButton :list="{ name: 'There\'s no list to show!', id: 0}" disabled/>
@@ -28,20 +28,11 @@ export default {
     },
     isSelected(list) {
       //check if the provided element is currently selected
-      if (this.selected.id != null) {
-        return this.selected.id === list.id;
-      } else {
-        //fallback to the name
-        return this.selected.name === list.name;
-      }
+      return this.$route.params.listId === list.id;
     },
     isDisabled(list) {
       //check if the provided element is currently disabled
       return list.id === 0;
-    },
-    switchList(list) {
-      //proxy the event to the parent
-      this.$emit('switchList', list);
     },
   },
   props: {
@@ -52,10 +43,6 @@ export default {
     lists: {
       type: Array,
       default: [],
-    },
-    selected: {
-      type: Object,
-      default: {},
     },
   },
   created() {

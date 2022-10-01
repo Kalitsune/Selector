@@ -15,7 +15,6 @@
           <img class="dark:block hidden h-9 self-center" src="../assets/selector-dark.svg" alt="@Selector" />
           <img class="dark:hidden block h-9 self-center" src="../assets/selector.svg" alt="@Selector" />
         </span>
-
         <!--short logos-->
         <span class="block sm:hidden">
           <img class="dark:block hidden h-9 self-center" src="../assets/selector-short-dark.svg" alt="@Selector" />

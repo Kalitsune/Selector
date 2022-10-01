@@ -13,8 +13,8 @@
                 if (event.data === 'success') {
                   // close the window
                   win.close();
-                  // reload the page
-                  window.location.reload();
+                  // redirect to the app
+                  this.$router.push({name: 'app'});
                 }
               }
             });

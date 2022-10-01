@@ -1,8 +1,19 @@
 <script>
     import GoogleSignInButton from '../components/GoogleSignInButton.vue';
+    import api from "../api.js";
 
     export default {
-        components: { GoogleSignInButton }
+      name: "Welcome",
+      components: { GoogleSignInButton },
+      mounted() {
+        //check if the user is authenticated
+        api.getLists().then(lists => {
+          if (lists.constructor === Array) {
+            //redirect to the app page
+            this.$router.push({name: "app", params: {listId: lists[0].id, mode: "view"}});
+          }
+        }).catch(() => {});
+      }
     }
 </script>
 

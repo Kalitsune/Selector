@@ -1,6 +1,6 @@
 <template>
   <Topbar @toggleSidebar="toggleSidebar"/>
-  <Sidebar :collapsed="sidebarCollapsed" :lists="lists" :selected="selected" @switchList="switchList"/>
+  <Sidebar :collapsed="sidebarCollapsed" :lists="lists"/>
 </template>
 
 <script>
@@ -18,23 +18,31 @@ export default {
       //check if the device has medium height
       return window.innerWidth < 1024;
     },
-    switchList(list) {
-      // change the selected list
-      this.selected = list;
-    },
   },
   mounted() {
     //get the lists from the api
     api.getLists().then((lists) => {
-      this.selected = lists[0]
+      //check if there's a default route selected
+      if (!this.$route.params.hasOwnProperty('listId')) {
+        console.log(lists[0].id);
+        //set the list to the default
+        this.$router.push({name: "app", params: {listId: lists[0].id, mode: "view"}});
+      }
+
+      //populate the list
       this.lists = lists;
+    }).catch(statusCode => {
+      //check if the status code is 401
+      if (statusCode === 401) {
+        //redirect to the login page
+        this.$router.push({name: "login"});
+      }
     });
   },
   data() {
     return {
       sidebarCollapsed: this.sidebarDefaultValue(),
       lists: [],
-      selected: {},
     };
   },
   components: {Topbar, Sidebar }

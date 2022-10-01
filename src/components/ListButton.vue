@@ -1,5 +1,5 @@
 <template>
-  <button @click="$emit('switchList',  )" :class="{selected: isSelected, disabled: disabled}" id="button-bg" class="w-full py-4 pl-5 flex flex-row space-x-2">
+  <button @click="switchList" :class="{selected: isSelected, disabled: disabled}" id="button-bg" class="w-full py-4 pl-5 flex flex-row space-x-2">
     <font-awesome-icon class="list-element h-6" icon="fa-solid fa-list-ul"/>
     <span class="list-element h-7">{{list.name}}</span>
   </button>
@@ -17,6 +17,12 @@ export default {
     disabled: {
       type: Boolean,
       default: false
+    }
+  },
+  methods: {
+    switchList() {
+      //redirect to the new url by replacing the list parameter
+      this.$router.push({name: "app", params: {listId: this.list.id, mode: this.$route.params.mode}});
     }
   }
 }
