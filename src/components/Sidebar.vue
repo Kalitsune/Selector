@@ -2,7 +2,7 @@
   <div :class="{'collapsed': collapsed, 'fullscreen': fullscreen}" class="sidebar">
     <ul>
       <li v-if="lists.length > 0" v-for="list in lists">
-        <ListButton :list="list" :disabled="isDisabled(list)" :selected="isSelected(list)"/>
+        <ListButton :list="list" :disabled="isDisabled(list)" :isSelected="isSelected(list)" @switchList="switchList"/>
       </li>
       <li v-else>
         <ListButton :list="{ name: 'There\'s no list to show!', id: 0}" disabled/>
@@ -15,7 +15,6 @@
 <script>
 
 import ListButton from "./ListButton.vue";
-import api from "../api.js";
 export default {
   name: "Sidebar",
   components: {ListButton},
@@ -39,32 +38,33 @@ export default {
     isDisabled(list) {
       //check if the provided element is currently disabled
       return list.id === 0;
-    }
+    },
+    switchList(list) {
+      //proxy the event to the parent
+      this.$emit('switchList', list);
+    },
   },
   props: {
     collapsed: {
       type: Boolean,
       default: false,
     },
+    lists: {
+      type: Array,
+      default: [],
+    },
+    selected: {
+      type: Object,
+      default: {},
+    },
   },
-  mounted() {
+  created() {
     //handle screen resizing
     window.addEventListener('resize', this.onResize);
-
-    //get the lists from the api
-    api.getLists().then((lists) => {
-      this.selected = lists[0]
-      this.lists = lists;
-    });
-  },
-  unmounted() {
-    window.removeEventListener('resize', this.onResize);
   },
   data() {
     return {
       fullscreen: this.isFullscreen(),
-      lists: [],
-      selected: {},
     };
   },
 };

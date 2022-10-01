@@ -1,8 +1,8 @@
 <template>
-  <div :class="{selected: selected, disabled: disabled}" id="button-bg" class="w-full py-4 pl-5 flex flex-row space-x-2">
+  <button @click="$emit('switchList',  )" :class="{selected: isSelected, disabled: disabled}" id="button-bg" class="w-full py-4 pl-5 flex flex-row space-x-2">
     <font-awesome-icon class="list-element h-6" icon="fa-solid fa-list-ul"/>
-    <p class="list-element h-7">{{list.name}}</p>
-  </div>
+    <span class="list-element h-7">{{list.name}}</span>
+  </button>
 </template>
 
 <script>
@@ -10,7 +10,7 @@ export default {
   name: "ListButton",
   props: {
     list: Object,
-    selected: {
+    isSelected: {
       type: Boolean,
       default: false
     },
