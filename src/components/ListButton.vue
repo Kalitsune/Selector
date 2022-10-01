@@ -40,7 +40,7 @@ export default {
 }
 
 #button-bg:hover {
-  @apply bg-primary-light-50 dark:bg-neutral-800 dark:bg-opacity-30;
+  @apply bg-primary-light-100 bg-opacity-30  dark:bg-neutral-800;
 }
 
 .selected .list-element {
