@@ -1,12 +1,20 @@
 <template>
+  <context-menu ref="menu">
+    <context-menu-item icon="fa-solid fa-pencil" text="Rename" type="classic" tooltip="Renomez ou changez l'icone de votre liste"/>
+    <context-menu-item icon="fa-solid fa-clone" text="Duplicate" type="classic" tooltip="Maintenant vous en avez deux!"/>
+    <context-menu-item icon="fa-solid fa-share-nodes" text="Share" type="disabled" tooltip="Coming soon"/>
+    <context-menu-item icon="fa-solid fa-trash-can" text="Delete" type="destructive" tooltip="Suprimme vôtre liste de manière définitive"/>
+  </context-menu>
   <Topbar @toggleSidebar="toggleSidebar"/>
-  <Sidebar :collapsed="sidebarCollapsed" :lists="lists"/>
+  <Sidebar :collapsed="sidebarCollapsed" :lists="lists" @openContextMenu="coords => this.$refs.menu.open(coords)"/>
 </template>
 
 <script>
 import Sidebar from "../components/Sidebar.vue";
 import Topbar from "../components/Topbar.vue";
 import api from "../api.js";
+import ContextMenu from "../components/ContextMenu.vue";
+import ContextMenuItem from "../components/ContextMenuItem.vue";
 
 export default {
   name: "App",
@@ -45,7 +53,7 @@ export default {
       lists: [],
     };
   },
-  components: {Topbar, Sidebar }
+  components: {ContextMenu, Topbar, Sidebar, ContextMenuItem}
 }
 </script>
 
