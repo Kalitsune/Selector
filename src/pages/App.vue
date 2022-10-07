@@ -1,5 +1,5 @@
 <template>
-  <context-menu ref="menu">
+  <context-menu :fullscreen="fullscreen" ref="menu">
     <context-menu-item icon="fa-solid fa-pencil" text="Rename" type="classic" tooltip="Renomez ou changez l'icone de votre liste"/>
     <context-menu-item icon="fa-solid fa-clone" text="Duplicate" type="classic" tooltip="Maintenant vous en avez deux!"/>
     <context-menu-item icon="fa-solid fa-share-nodes" text="Share" type="disabled" tooltip="Coming soon"/>

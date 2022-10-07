@@ -1,5 +1,5 @@
 <template>
-  <span class="px-5 py-2 rounded-lg h-full" :title="tooltip" :class="type"><font-awesome-icon class="mr-2" :icon="icon" />{{text}}</span>
+  <div class="context-menu-item" :title="tooltip" :class="type"><font-awesome-icon class="m-2" :icon="icon" />{{text}}</div>
 </template>
 
 <script>
@@ -22,6 +22,12 @@ export default {
 </script>
 
 <style scoped>
+.context-menu-item {
+  @apply flex flex-row items-center justify-start rounded-lg cursor-pointer
+          p-4 lg:p-2 h-full w-full
+          text-xl lg:text-base
+}
+
 .disabled {
   @apply text-neutral-400 dark:text-neutral-600 cursor-not-allowed !important;
 }
