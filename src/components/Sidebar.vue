@@ -2,10 +2,10 @@
   <div :class="{'collapsed': collapsed, 'fullscreen': fullscreen}" class="sidebar">
     <ul>
       <li v-if="lists.length > 0" v-for="list in lists">
-        <ListButton :list="list" :disabled="isDisabled(list)" :isSelected="isSelected(list)" @openContextMenu="coords => this.$emit('openContextMenu', coords)"/>
+        <SidebarItem :list="list" :disabled="isDisabled(list)" :isSelected="isSelected(list)" @openContextMenu="evtData => this.$emit('openContextMenu', evtData)"/>
       </li>
       <li v-else>
-        <ListButton :list="{ name: 'There\'s no list to show!', id: 0}" disabled/>
+        <SidebarItem :list="{ name: 'There\'s no list to show!', id: 0}" disabled/>
       </li>
     </ul>
   </div>
@@ -14,18 +14,11 @@
 
 <script>
 
-import ListButton from "./ListButton.vue";
+import SidebarItem from "./SidebarItem.vue";
 export default {
   name: "Sidebar",
-  components: {ListButton},
+  components: {SidebarItem},
   methods: {
-    isFullscreen() {
-      return window.innerWidth < 	1024;
-    },
-    onResize() {
-      //handle resize operation
-      this.fullscreen = this.isFullscreen();
-    },
     isSelected(list) {
       //check if the provided element is currently selected
       return this.$route.params.listId === list.id;
@@ -40,19 +33,14 @@ export default {
       type: Boolean,
       default: false,
     },
+    fullscreen: {
+      type: Boolean,
+      default: false,
+    },
     lists: {
       type: Array,
       default: [],
     },
-  },
-  created() {
-    //handle screen resizing
-    window.addEventListener('resize', this.onResize);
-  },
-  data() {
-    return {
-      fullscreen: this.isFullscreen(),
-    };
   },
 };
 </script>
@@ -70,7 +58,7 @@ export default {
 }
 
 .sidebar.fullscreen {
-  @apply w-screen bg-neutral-200 dark:bg-neutral-800 opacity-100;
+  @apply w-screen bottom-0 bg-neutral-200 dark:bg-neutral-800 opacity-100 pb-4;
 }
 .collapsed.sidebar.fullscreen {
   @apply translate-y-full opacity-0;

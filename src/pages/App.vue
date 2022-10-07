@@ -5,8 +5,9 @@
     <context-menu-item icon="fa-solid fa-share-nodes" text="Share" type="disabled" tooltip="Coming soon"/>
     <context-menu-item icon="fa-solid fa-trash-can" text="Delete" type="destructive" tooltip="Suprimme vôtre liste de manière définitive"/>
   </context-menu>
+
   <Topbar @toggleSidebar="toggleSidebar"/>
-  <Sidebar :collapsed="sidebarCollapsed" :lists="lists" @openContextMenu="coords => this.$refs.menu.open(coords)"/>
+  <Sidebar :fullscreen="fullscreen " :collapsed="sidebarCollapsed" :lists="lists" @openContextMenu="evtData => this.$refs.menu.open(evtData)"/>
 </template>
 
 <script>
@@ -25,6 +26,13 @@ export default {
     sidebarDefaultValue() {
       //check if the device has medium height
       return window.innerWidth < 1024;
+    },
+    isFullscreen() {
+      return window.innerWidth < 	1024;
+    },
+    onResize() {
+      //handle resize operation
+      this.fullscreen = this.isFullscreen();
     },
   },
   mounted() {
@@ -47,10 +55,15 @@ export default {
       }
     });
   },
+  created() {
+    //handle screen resizing
+    window.addEventListener('resize', this.onResize);
+  },
   data() {
     return {
       sidebarCollapsed: this.sidebarDefaultValue(),
       lists: [],
+      fullscreen: this.isFullscreen(),
     };
   },
   components: {ContextMenu, Topbar, Sidebar, ContextMenuItem}

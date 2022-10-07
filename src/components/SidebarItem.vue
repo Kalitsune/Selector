@@ -7,7 +7,7 @@
 
 <script>
 export default {
-  name: "ListButton",
+  name: "SidebarItem",
   props: {
     list: Object,
     isSelected: {
@@ -33,7 +33,7 @@ export default {
       evt.preventDefault();
 
       //open the context menu
-      this.$emit('openContextMenu', {x, y})
+      this.$emit('openContextMenu', {x, y, list: this.list})
     }
   }
 }
