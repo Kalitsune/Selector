@@ -1,11 +1,18 @@
 <template>
+  <context-menu :fullscreen="fullscreen" ref="menu">
+    <context-menu-item icon="fa-solid fa-pencil" text="Rename" type="disabled" tooltip="Renomez ou changez l'icone de votre liste"/>
+    <context-menu-item icon="fa-solid fa-clone" text="Duplicate" type="disabled" tooltip="Maintenant vous en avez deux !"/>
+    <context-menu-item icon="fa-solid fa-share-nodes" text="Share" type="disabled" tooltip="Obtenez un lien partageable pour vôtre liste !"/>
+    <context-menu-item icon="fa-solid fa-trash-can" text="Delete" type="destructive" tooltip="Suprimme vôtre liste de manière définitive."/>
+  </context-menu>
+
   <div :class="{'collapsed': collapsed, 'fullscreen': fullscreen}" class="sidebar">
     <ul>
       <li v-if="lists.length > 0" v-for="list in lists">
-        <SidebarItem :list="list" :disabled="isDisabled(list)" :isSelected="isSelected(list)" @openContextMenu="evtData => this.$emit('openContextMenu', evtData)"/>
+        <SidebarItem :fullscreen="fullscreen" :list="list" :disabled="isDisabled(list)" :isSelected="isSelected(list)" @openContextMenu="evtData => this.$refs.menu.open(evtData)"/>
       </li>
       <li v-else>
-        <SidebarItem :list="{ name: 'There\'s no list to show!', id: 0}" disabled/>
+        <SidebarItem :fullscreen="fullscreen" :list="{ name: 'There\'s no list to show!', id: 0}" disabled/>
       </li>
     </ul>
   </div>
@@ -15,9 +22,12 @@
 <script>
 
 import SidebarItem from "./SidebarItem.vue";
+import ContextMenu from "./ContextMenu.vue";
+import ContextMenuItem from "./ContextMenuItem.vue";
+
 export default {
   name: "Sidebar",
-  components: {SidebarItem},
+  components: {SidebarItem, ContextMenu, ContextMenuItem},
   methods: {
     isSelected(list) {
       //check if the provided element is currently selected

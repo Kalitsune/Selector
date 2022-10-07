@@ -17,7 +17,8 @@ export default {
     disabled: {
       type: Boolean,
       default: false
-    }
+    },
+    fullscreen: Boolean
   },
   methods: {
     switchList() {
