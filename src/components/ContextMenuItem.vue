@@ -1,15 +1,31 @@
 <template>
-  <div class="context-menu-item" :title="tooltip" :class="type"><font-awesome-icon class="m-2" :icon="icon" />{{text}}</div>
+  <div @click="clickHandler" class="context-menu-item" :title="tooltip" :class="type"><font-awesome-icon class="m-2" :icon="icon" />{{text}}</div>
 </template>
 
 <script>
 export default {
   name: "ContextMenuItem",
+  methods: {
+    clickHandler(evt) {
+
+      if (this.type === "disabled" || this.handler === undefined) {
+        evt.preventDefault();
+        evt.stopPropagation();
+        return;
+      }
+
+      this.handler(this.list);
+    },
+  },
   props: {
+    list: {
+      type: [Object, Function],
+      default: {},
+    },
     icon: String,
     text: String,
     tooltip: String,
-    onClick: Function,
+    handler: Function,
     type: {
       type: String,
       default: "classic",

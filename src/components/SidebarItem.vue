@@ -36,6 +36,10 @@ export default {
       //open the context menu
       this.$emit('openContextMenu', {x, y, list: this.list})
     }
+  },
+  unmounted() {
+    //emit an event to the parent component to close the context menu
+    this.$emit('closeContextMenu');
   }
 }
 </script>

@@ -1,7 +1,7 @@
 <template>
 <div class="context-menu" :class="{'fullscreen': fullscreen}" v-show="visible" :style="style" ref="context" tabindex="0" @blur="close">
   <p v-show="fullscreen" class="text-neutral-400 w-full">{{list.name}}</p>
-  <slot>
+  <slot :list="list">
     <context-menu-item icon="fa-solid fa-ban" text="There's nothing here" type="disabled"/>
   </slot>
 </div>

@@ -13,5 +13,19 @@ export default {
                     }
                })
           })
+     },
+     deleteList(listId) {
+            //delete a list from the api
+            return new Promise((resolve, reject) => {
+                 fetch(`/api/list/${listId}`, {
+                        method: 'DELETE'
+                 }).then(response => {
+                        if (response.ok) {
+                             resolve();
+                        } else {
+                             reject(response.status);
+                        }
+                 })
+            })
      }
 }
