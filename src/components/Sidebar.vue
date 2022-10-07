@@ -47,7 +47,7 @@ export default {
 
 <style scoped>
 .sidebar {
-  @apply left-0 top-0 h-full transition-all ease-in-out duration-500 flex flex-col overflow-y-scroll
+  @apply left-0 top-0 h-full transition-all ease-in-out duration-500 flex flex-col overflow-y-scroll pb-6
 }
 
 .sidebar:not(.fullscreen) {
@@ -58,7 +58,7 @@ export default {
 }
 
 .sidebar.fullscreen {
-  @apply w-screen bottom-0 bg-neutral-200 dark:bg-neutral-800 opacity-100 pb-4;
+  @apply w-screen bottom-0 bg-neutral-200 dark:bg-neutral-800 opacity-100;
 }
 .collapsed.sidebar.fullscreen {
   @apply translate-y-full opacity-0;
