@@ -1,6 +1,6 @@
 <template>
-<div class="context-menu" :class="{'fullscreen': fullscreen}" v-show="visible" :style="style" ref="context" tabindex="0" @blur="close">
-  <p v-show="fullscreen" class="text-neutral-400 w-full">{{list.name}}</p>
+<div class="context-menu" :class="{'isMobile': isMobile}" v-show="visible" :style="style" ref="context" tabindex="0" @blur="close">
+  <p v-show="isMobile" class="text-neutral-400 w-full">{{list.name}}</p>
   <slot :list="list">
     <context-menu-item icon="fa-solid fa-ban" text="There's nothing here" type="disabled"/>
   </slot>
@@ -28,13 +28,14 @@ export default {
     // get position of context menu
     style() {
       return {
-        left: this.fullscreen ? '0px' : this.x + 'px',
-        top: this.fullscreen ? 'auto' : this.y + 'px',
+        left: this.$store.state.isMobile ? '0px' : this.x + 'px',
+        top: this.$store.state.isMobile ? 'auto' : this.y + 'px',
       };
     },
-  },
-  props: {
-    fullscreen: Boolean,
+    isMobile() {
+      //check if the sidebar is isMobile
+      return this.$store.state.isMobile;
+    }
   },
   data() {
     return {
@@ -54,7 +55,7 @@ export default {
   @apply bg-neutral-100 dark:bg-neutral-800 w-48 rounded-lg;
 }
 
-.fullscreen.context-menu {
+.isMobile.context-menu {
   @apply w-full left-0 bottom-0 overflow-y-scroll rounded-none;
 
   max-height: 50%;

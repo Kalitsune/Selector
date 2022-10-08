@@ -1,6 +1,6 @@
 <template>
   <!-- sidebar items context menu -->
-  <context-menu :fullscreen="fullscreen" ref="SidebarItemsContextMenu" v-slot="slotProps">
+  <context-menu ref="SidebarItemsContextMenu" v-slot="slotProps">
     <context-menu-item icon="fas fa-pencil" text="Rename" type="disabled" tooltip="Renomez ou changez l'icone de votre liste" :list="slotProps.list"/>
     <context-menu-item icon="fas fa-clone" text="Duplicate" type="disabled" tooltip="Maintenant vous en avez deux !" :list="slotProps.list"/>
     <context-menu-item icon="fas fa-share-nodes" text="Share" type="disabled" tooltip="Obtenez un lien partageable pour vôtre liste !" :list="slotProps.list"/>
@@ -8,23 +8,23 @@
   </context-menu>
 
   <!-- sidebar context menu -->
-  <context-menu :fullscreen="fullscreen" ref="SidebarContextMenu" v-slot="slotProps">
+  <context-menu ref="SidebarContextMenu" v-slot="slotProps">
     <context-menu-item icon="fas fa-plus" text="Create" type="disabled" tooltip="Créez une nouvelle liste." :list="slotProps.list"/>
     <context-menu-item icon="fas fa-arrows-rotate" text="Refresh" type="disabled" tooltip="Vos listes ne sont pas à jour? actualisez les!" :list="slotProps.list"/>
   </context-menu>
 
   <!-- sidebar -->
-  <div :class="{'collapsed': collapsed, 'fullscreen': fullscreen}" class="sidebar" @contextmenu="openSidebarContextMenu" >
+  <div :class="{'collapsed': collapsed, 'isMobile': isMobile}" class="sidebar" @contextmenu="openSidebarContextMenu" >
     <!-- sidebar items -->
     <ul>
       <!-- array of lists -->
       <li v-if="lists.length > 0" v-for="list in lists">
-        <SidebarItem :fullscreen="fullscreen" :list="list" :disabled="isDisabled(list)" :isSelected="isSelected(list)" @closeContextMenu="this.$refs.SidebarItemsContextMenu.close()" @openContextMenu="evtData => this.$refs.SidebarItemsContextMenu.open(evtData)"/>
+        <SidebarItem :list="list" :disabled="isDisabled(list)" :isSelected="isSelected(list)" @closeContextMenu="this.$refs.SidebarItemsContextMenu.close()" @openContextMenu="evtData => this.$refs.SidebarItemsContextMenu.open(evtData)"/>
       </li>
 
       <!-- if there's no list -->
       <li v-else>
-        <SidebarItem :fullscreen="fullscreen" :list="{ name: 'There\'s no list to show!', id: 0}" disabled/>
+        <SidebarItem :list="{ name: 'There\'s no list to show!', id: 0}" disabled/>
       </li>
     </ul>
   </div>
@@ -49,10 +49,6 @@ export default {
       //check if the provided element is currently disabled
       return list.id === 0;
     },
-    deleteList(list) {
-      //redirect to the delete router endpoint
-      this.$router.push({name: "app", params: {listId: list.id, mode:"delete"}});
-    },
     openSidebarContextMenu(event) {
       //get the coordinates of the click
       let x = event.pageX || event.clientX;
@@ -64,20 +60,26 @@ export default {
 
       //open the context menu
       this.$refs.SidebarContextMenu.open({x, y, list: {name: "sidebar", id: 0}});
+    },
+    deleteList(list) {
+      //delete the list using the api easy handler
+      this.$api.deleteList(this, list);
     }
+  },
+  computed: {
+      lists() {
+        //make the lists available to the template
+        return this.$store.state.lists;
+      },
+      isMobile() {
+        //check if the sidebar is isMobile
+        return this.$store.state.isMobile;
+      }
   },
   props: {
     collapsed: {
       type: Boolean,
       default: false,
-    },
-    fullscreen: {
-      type: Boolean,
-      default: false,
-    },
-    lists: {
-      type: Array,
-      default: [],
     },
   },
 };
@@ -88,17 +90,17 @@ export default {
   @apply left-0 top-0 h-full transition-all ease-in-out duration-500 flex flex-col overflow-y-scroll pb-6
 }
 
-.sidebar:not(.fullscreen) {
+.sidebar:not(.isMobile) {
   @apply w-72 bg-neutral-50 dark:bg-neutral-700;
 }
-.collapsed.sidebar:not(.fullscreen) {
+.collapsed.sidebar:not(.isMobile) {
   @apply -translate-x-full;
 }
 
-.sidebar.fullscreen {
+.sidebar.isMobile {
   @apply w-screen bottom-0 bg-neutral-200 dark:bg-neutral-800 opacity-100;
 }
-.collapsed.sidebar.fullscreen {
+.collapsed.sidebar.isMobile {
   @apply translate-y-full opacity-0;
 }
 </style>

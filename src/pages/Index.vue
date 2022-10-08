@@ -6,7 +6,23 @@
 
 <script>
 export default {
-  name: "index"
+  name: "index",
+  methods: {
+    isMobile() {
+      return window.innerWidth < 	1024;
+    },
+    updateIsMobile() {
+      //handle resize operation
+      this.$store.commit("setIsMobile", this.isMobile());
+    }
+  },
+  created() {
+    //handle screen resizing
+    window.addEventListener('resize', this.updateIsMobile);
+
+    //set the default value for the isMobile property
+    this.updateIsMobile();
+  },
 }
 </script>
 

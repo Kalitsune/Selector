@@ -18,7 +18,6 @@ export default {
       type: Boolean,
       default: false
     },
-    fullscreen: Boolean
   },
   methods: {
     switchList() {
@@ -36,6 +35,12 @@ export default {
 
       //open the context menu
       this.$emit('openContextMenu', {x, y, list: this.list})
+    }
+  },
+  computed: {
+    isMobile() {
+      //check if the sidebar is isMobile
+      return this.$store.state.isMobile;
     }
   },
   unmounted() {

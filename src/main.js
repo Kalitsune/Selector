@@ -1,10 +1,13 @@
 import { createApp } from 'vue'
+import { createStore } from 'vuex'
 import vueCookies from 'vue-cookies'
 import { createRouter, createWebHistory } from 'vue-router'
 
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import {fas} from '@fortawesome/free-solid-svg-icons'
+
+import api from './api.js'
 
 library.add(fas)
 
@@ -26,8 +29,32 @@ const router = createRouter({
 })
 app.use(router)
 
+// Use vuex
+const store = createStore({
+    state () {
+        return {
+            lists: [],
+            isMobile: false,
+        }
+    },
+    mutations: {
+        setLists(state, lists) {
+            state.lists = lists;
+        },
+        setIsMobile(state, isMobile) {
+            state.isMobile = isMobile;
+        }
+    }
+})
+app.use(store)
+
 //use vue-cookies to check the presence of some cookies
 app.use(vueCookies)
 
+//use api plugin
+app.use(api)
+
 app.component('font-awesome-icon', FontAwesomeIcon)
 app.mount('#app')
+
+export default app
