@@ -61,6 +61,9 @@ export default {
                 //create a list on the api
                 _createList(list).then(list => {
                     props.$store.commit("activateList", list);
+
+                    //select the new list
+                    props.$router.push({name: "app", params: {listId: list.id}});
                 }).catch(statusCode => {
                     //if the user is not authenticated, popup the login page
                     if (statusCode === 401) {
