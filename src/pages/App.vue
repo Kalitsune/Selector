@@ -1,8 +1,10 @@
 <template>
-  <login v-if="needLogin" :handler="loggedIn" expired class="backdrop-blur-lg" />
+  <div class="h-screen w-screen bg-neutral-200 dark:bg-neutral-800 overflow-hidden">
+    <login v-if="needLogin" :handler="loggedIn" expired class="backdrop-blur" />
 
-  <Topbar @toggleSidebar="toggleSidebar"/>
-  <Sidebar :collapsed="sidebarCollapsed"/>
+    <Topbar @toggleSidebar="toggleSidebar"/>
+    <Sidebar :collapsed="sidebarCollapsed"/>
+  </div>
 </template>
 
 <script>
@@ -18,6 +20,13 @@ export default {
     },
     loggedIn() {
       this.$store.commit('needLogin', false)
+    },
+    isMobile() {
+      return window.innerWidth < 	1024;
+    },
+    updateIsMobile() {
+      //handle resize operation
+      this.$store.commit("setIsMobile", this.isMobile());
     }
   },
   mounted() {
@@ -27,6 +36,13 @@ export default {
     return {
       sidebarCollapsed: !this.$store.state.isMobile,
     };
+  },
+  created() {
+    //handle screen resizing
+    window.addEventListener('resize', this.updateIsMobile);
+
+    //set the default value for the isMobile property
+    this.updateIsMobile();
   },
   computed: {
     needLogin() {
