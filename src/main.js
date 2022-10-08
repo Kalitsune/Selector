@@ -4,9 +4,9 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faBars, faListUl,  faBan, faTrashCan, faPencil, faClone, faShareNodes} from '@fortawesome/free-solid-svg-icons'
+import {fas} from '@fortawesome/free-solid-svg-icons'
 
-library.add(faBars, faListUl, faBan, faTrashCan, faPencil, faClone, faShareNodes)
+library.add(fas)
 
 import css from './index.css'
 import Index from './pages/Index.vue'

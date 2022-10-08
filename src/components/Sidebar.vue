@@ -1,16 +1,28 @@
 <template>
-  <context-menu :fullscreen="fullscreen" ref="menu" v-slot="slotProps">
-    <context-menu-item icon="fa-solid fa-pencil" text="Rename" type="disabled" tooltip="Renomez ou changez l'icone de votre liste" :list="slotProps.list"/>
-    <context-menu-item icon="fa-solid fa-clone" text="Duplicate" type="disabled" tooltip="Maintenant vous en avez deux !" :list="slotProps.list"/>
-    <context-menu-item icon="fa-solid fa-share-nodes" text="Share" type="disabled" tooltip="Obtenez un lien partageable pour vôtre liste !" :list="slotProps.list"/>
-    <context-menu-item :handler="deleteList" icon="fa-solid fa-trash-can" text="Delete" type="destructive" tooltip="Suprimme vôtre liste de manière définitive." :list="slotProps.list"/>
+  <!-- sidebar items context menu -->
+  <context-menu :fullscreen="fullscreen" ref="SidebarItemsContextMenu" v-slot="slotProps">
+    <context-menu-item icon="fas fa-pencil" text="Rename" type="disabled" tooltip="Renomez ou changez l'icone de votre liste" :list="slotProps.list"/>
+    <context-menu-item icon="fas fa-clone" text="Duplicate" type="disabled" tooltip="Maintenant vous en avez deux !" :list="slotProps.list"/>
+    <context-menu-item icon="fas fa-share-nodes" text="Share" type="disabled" tooltip="Obtenez un lien partageable pour vôtre liste !" :list="slotProps.list"/>
+    <context-menu-item :handler="deleteList" icon="fas fa-trash-can" text="Delete" type="destructive" tooltip="Suprimme vôtre liste de manière définitive." :list="slotProps.list"/>
   </context-menu>
 
-  <div :class="{'collapsed': collapsed, 'fullscreen': fullscreen}" class="sidebar">
+  <!-- sidebar context menu -->
+  <context-menu :fullscreen="fullscreen" ref="SidebarContextMenu" v-slot="slotProps">
+    <context-menu-item icon="fas fa-plus" text="Create" type="disabled" tooltip="Créez une nouvelle liste." :list="slotProps.list"/>
+    <context-menu-item icon="fas fa-arrows-rotate" text="Refresh" type="disabled" tooltip="Vos listes ne sont pas à jour? actualisez les!" :list="slotProps.list"/>
+  </context-menu>
+
+  <!-- sidebar -->
+  <div :class="{'collapsed': collapsed, 'fullscreen': fullscreen}" class="sidebar" @contextmenu="openSidebarContextMenu" >
+    <!-- sidebar items -->
     <ul>
+      <!-- array of lists -->
       <li v-if="lists.length > 0" v-for="list in lists">
-        <SidebarItem :fullscreen="fullscreen" :list="list" :disabled="isDisabled(list)" :isSelected="isSelected(list)" @closeContextMenu="this.$refs.menu.close()" @openContextMenu="evtData => this.$refs.menu.open(evtData)"/>
+        <SidebarItem :fullscreen="fullscreen" :list="list" :disabled="isDisabled(list)" :isSelected="isSelected(list)" @closeContextMenu="this.$refs.SidebarItemsContextMenu.close()" @openContextMenu="evtData => this.$refs.SidebarItemsContextMenu.open(evtData)"/>
       </li>
+
+      <!-- if there's no list -->
       <li v-else>
         <SidebarItem :fullscreen="fullscreen" :list="{ name: 'There\'s no list to show!', id: 0}" disabled/>
       </li>
@@ -40,6 +52,18 @@ export default {
     deleteList(list) {
       //redirect to the delete router endpoint
       this.$router.push({name: "app", params: {listId: list.id, mode:"delete"}});
+    },
+    openSidebarContextMenu(event) {
+      //get the coordinates of the click
+      let x = event.pageX || event.clientX;
+      let y = event.pageY || event.clientY;
+
+      //prevent the default context menu and prevent triggering other events
+      event.preventDefault();
+      event.stopPropagation();
+
+      //open the context menu
+      this.$refs.SidebarContextMenu.open({x, y, list: {name: "sidebar", id: 0}});
     }
   },
   props: {
