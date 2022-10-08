@@ -60,7 +60,7 @@ export default {
 
 .disabled#button-bg, .disabled#button-bg:hover,
 .disabled .list-element, .disabled .list-element:hover {
-  @apply text-neutral-400 dark:text-neutral-600 cursor-not-allowed !important;
+  @apply text-neutral-400 dark:text-neutral-600 bg-transparent cursor-not-allowed !important;
 }
 
 .selected#button-bg, .selected#button-bg:hover {
