@@ -3,7 +3,7 @@ package structures
 import "encoding/json"
 
 type List struct {
-	Id       string           `json:"id"`
+	Id       string           `json:"id,omitempty"`
 	Name     string           `json:"name"`
 	Elements []RandomElements `json:"elements"`
 }

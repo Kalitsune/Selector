@@ -83,6 +83,9 @@ func IdToList(srv *drive.Service, id string) (*structures.List, error) {
 		return &structures.List{}, err
 	}
 
+	//set the ID of the list
+	list.Id = id
+
 	return &list, nil
 }
 

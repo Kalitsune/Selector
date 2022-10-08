@@ -10,7 +10,7 @@
   <!-- sidebar context menu -->
   <context-menu ref="SidebarContextMenu" v-slot="slotProps">
     <context-menu-item icon="fas fa-plus" text="Create" type="disabled" tooltip="Créez une nouvelle liste." :list="slotProps.list"/>
-    <context-menu-item :handler="$api.refreshLists" icon="fas fa-arrows-rotate" text="Refresh" type="classic" tooltip="Vos listes ne sont pas à jour? actualisez les!" :list="slotProps.list"/>
+    <context-menu-item :handler="$api.refreshLists" icon="fas fa-arrows-rotate" text="Refresh" type="classic" tooltip="Vos listes ne sont pas à jour? actualisez les !" :list="slotProps.list"/>
   </context-menu>
 
   <!-- sidebar -->

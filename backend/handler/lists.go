@@ -123,6 +123,8 @@ func PostList(ctx *fiber.Ctx) error {
 	// Create a drive.File object from the list
 	file := &drive.File{Name: list.Name, MimeType: "application/json", Parents: []string{"appDataFolder"}}
 
+	//ensure that the list ID is empty
+	list.Id = ""
 	// Marshal the list to json
 	listData, err := list.ToJSON()
 	if err != nil {
@@ -140,14 +142,6 @@ func PostList(ctx *fiber.Ctx) error {
 	api.Logger.Info.Printf("handling POST request to /api/lists - created file with id: %s", file.Id)
 
 	list.Id = file.Id
-
-	//update the file on Google Drive to give it its ID
-	reader = bytes.NewReader(listData)
-	_, err = srv.Files.Update(list.Id, &drive.File{}).Media(reader).Do()
-	if err != nil {
-		return handleErrors(err)
-	}
-	api.Logger.Info.Printf("handling POST request to /api/lists - updated file with id: %s", file.Id)
 
 	ctx.Status(fiber.StatusCreated)
 	return ctx.JSON(list)
@@ -172,8 +166,9 @@ func PatchList(ctx *fiber.Ctx) error {
 	if err != nil {
 		return fiber.ErrBadRequest
 	}
-	list.Id = id
 
+	// ensure that the id field is empty
+	list.Id = ""
 	// Marshal the list to json
 	listData, err := list.ToJSON()
 	if err != nil {
@@ -191,6 +186,7 @@ func PatchList(ctx *fiber.Ctx) error {
 
 	api.Logger.Info.Printf("handling PATCH request to /api/list/%s - updated file with id: %s", id, list.Id)
 
+	list.Id = id
 	return ctx.JSON(list)
 }
 
