@@ -23,7 +23,8 @@ func handleErrors(err error) error {
 	api.Logger.Warning.Printf("(Probably) A GoogleAPI Error has occurred: %v", err)
 
 	//handle 404 errors
-	if strings.HasPrefix(err.Error(), "googleapi: Error 404: File not found:") {
+	if strings.HasPrefix(err.Error(), "googleapi: Error 404: File not found:") ||
+		strings.HasPrefix(err.Error(), "googleapi: got HTTP response code 404") {
 		return fiber.ErrNotFound
 	}
 
