@@ -19,22 +19,14 @@ func GoogleCallback(ctx *fiber.Ctx) error {
 	// exchange the code for a token
 	token, err := api.CodeToToken(code)
 	if err != nil {
-		return err
-	}
-
-	//serialize the token
-	serializedToken, err := api.TokenSerializer(token)
-	if err != nil {
 		return fiber.ErrInternalServerError
 	}
 
-	//store the cookie
-	cookie := &fiber.Cookie{
-		Name:    "token",
-		Value:   serializedToken,
-		Expires: token.Expiry,
+	//save the cookie containing the serialized token
+	err = api.SaveToken(ctx, token)
+	if err != nil {
+		return fiber.ErrInternalServerError
 	}
-	ctx.Cookie(cookie)
 
 	// load the callback page
 	ctx.Set(fiber.HeaderContentType, fiber.MIMETextHTML)

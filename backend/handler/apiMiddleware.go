@@ -35,12 +35,19 @@ func ApiMiddleware(ctx *fiber.Ctx) error {
 
 	//check if the token is expired
 	if token.Expiry.Before(time.Now()) {
-		api.Logger.Warning.Println("a request has been canceled: token is expired")
 
-		ctx.Status(fiber.StatusUnauthorized)
-		return ctx.JSON(fiber.Map{
-			"error": "token expired, please login again",
-		})
+		//refresh the token
+		token, err = api.RefreshToken(token)
+
+		//if there is an error, the user need to authenticate again
+		if err != nil {
+			api.Logger.Warning.Printf("a request has been canceled: token is expired: %v", err)
+
+			ctx.Status(fiber.StatusUnauthorized)
+			return ctx.JSON(fiber.Map{
+				"error": "token expired, please login again",
+			})
+		}
 	}
 
 	//set the token in the context

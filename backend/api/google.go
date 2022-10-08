@@ -6,18 +6,20 @@ import (
 	"encoding/base64"
 	"encoding/gob"
 	"encoding/json"
+	"github.com/gofiber/fiber/v2"
 	"github.com/kalitsune/selector/structures"
 	"golang.org/x/oauth2"
 	"google.golang.org/api/drive/v3"
 	"google.golang.org/api/option"
 	"net/http"
+	"time"
 )
 
 var config = &oauth2.Config{}
 
 // GetAuthUrl returns the URL to the Google OAuth2 consent page.
 func GetAuthUrl() string {
-	return config.AuthCodeURL("state-token", oauth2.AccessTypeOffline)
+	return config.AuthCodeURL("state-token", oauth2.AccessTypeOffline, oauth2.ApprovalForce)
 }
 
 // CodeToToken exchanges a Google authorisation code for a token (read: https://developers.google.com/identity/protocols/oauth2)
@@ -82,4 +84,28 @@ func IdToList(srv *drive.Service, id string) (*structures.List, error) {
 	}
 
 	return &list, nil
+}
+
+// RefreshToken refreshes a token
+func RefreshToken(token *oauth2.Token) (*oauth2.Token, error) {
+	return config.TokenSource(context.TODO(), token).Token()
+}
+
+// SaveToken saves a token as a serialized cookie
+func SaveToken(ctx *fiber.Ctx, token *oauth2.Token) error {
+	//serialize the token
+	serializedToken, err := TokenSerializer(token)
+	if err != nil {
+		return err
+	}
+
+	//store the cookie
+	cookie := &fiber.Cookie{
+		Name:    "token",
+		Value:   serializedToken,
+		Expires: time.Now().Add(time.Hour * 24 * 5), // equivalent to 5d
+	}
+	ctx.Cookie(cookie)
+
+	return nil
 }
