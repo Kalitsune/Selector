@@ -8,14 +8,14 @@
         this.$api._getLists().then(lists => {
           if (lists.constructor === Array) {
             //redirect to the app page
-            this.$router.push({name: "app", params: {listId: this.$route.query.listId, mode: this.$route.query.mode}});
+            this.toApp();
           }
         }).catch(() => {});
       },
       methods: {
         toApp() {
           //redirect to the app page
-          this.$router.push({name: "app", params: {listId: this.$route.query.listId, mode: this.$route.query.mode}});
+          this.$router.push({name: "app"});
         },
       },
     }
