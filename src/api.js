@@ -64,8 +64,11 @@ export default {
                     //remove the deleted list from the lists array
                     props.$store.commit("setLists", props.$store.state.lists.filter(i => i.id !== list.id));
 
-                    //redirect to the first list of the array
-                    props.$router.push({name: "app", params: {listId: props.$store.state.lists[0].id, mode: "view"}});
+                    //check if the selected list has been deleted
+                    if (props.$route.params.listId === listId) {
+                        //redirect to the first element if it has been
+                        props.$router.push({name: "app", params: {listId: props.$store.state.lists[0].id, mode: "view"}});
+                    }
                 }).catch(statusCode => {
                     //enable the button back
                     list.id = listId;
@@ -76,9 +79,13 @@ export default {
                         handleAuth(props).then(() => {
                             //get the lists again
                             this.deleteList(list);
-                        });                    } else if (statusCode === 404) {
-                        //redirect to the app page
-                        props.$router.push({name: "app", params: {listId: props.$store.state.lists[0].id, mode: "view"}});
+                        });
+                    } else if (statusCode === 404) {
+                        //check if the selected list has been deleted
+                        if (props.$route.params.listId === listId) {
+                            //redirect to the first element if it has been
+                            props.$router.push({name: "app", params: {listId: props.$store.state.lists[0].id, mode: "view"}});
+                        }
                     }
                 });
 
