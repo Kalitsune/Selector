@@ -63,7 +63,7 @@ export default {
     },
     deleteList(list) {
       //delete the list using the api easy handler
-      this.$api.deleteList(this, list);
+      this.$api.deleteList(list);
     }
   },
   computed: {
