@@ -1,32 +1,38 @@
 <script>
     export default {
-        name: "GoogleSignInButton",
-        methods : {
-          signIn() {
-            // open a new window pointing to the Google login url
-            let win = window.open('/auth', '_blank', 'location=yes,height=570,width=520,scrollbars=yes,status=yes,left=' + (screen.width - 570)/2  + ',top=' + (screen.height - 520)/2);
-            // listen for the success event
-            window.addEventListener('message', (event) => {
-              // check if the event is coming from the correct origin
-              if (event.source === win) {
-                // check if the event is the success event
-                if (event.data === 'success') {
-                  // close the window
-                  win.close();
-                  // redirect to the app
-                  this.$router.push({name: "app", params: {listId: this.$route.query.listId, mode: this.$route.query.mode}});
-                }
-              }
-            });
+      name: "GoogleSignInButton",
+      props: {
+          handler: {
+              type: Function,
+              default: () => {}
           }
+      },
+      methods : {
+        signIn() {
+          // open a new window pointing to the Google login url
+          let win = window.open('/auth', '_blank', 'location=yes,height=570,width=520,scrollbars=yes,status=yes,left=' + (screen.width - 570)/2  + ',top=' + (screen.height - 520)/2);
+          // listen for the success event
+          window.addEventListener('message', (event) => {
+            // check if the event is coming from the correct origin
+            if (event.source === win) {
+              // check if the event is the success event
+              if (event.data === 'success') {
+                // close the window
+                win.close();
+                //call the handler
+                this.handler();
+              }
+            }
+          });
         }
+      }
     }
     
 </script>
 
 
 <template>
-    <button class="firebaseui-idp-google flex-center--all noselect md:w-1/4 w-1/2 bg-white dark:bg-neutral-700" id="google-signin" v-on:click="signIn" data-provider-id="google.com">
+    <button class="firebaseui-idp-google flex-center--all noselect w-full bg-white dark:bg-neutral-700" id="google-signin" v-on:click="signIn" data-provider-id="google.com">
 
         <span class="firebaseui-idp-icon-wrapper bg-white p-1.5 rounded">
             <img class="firebaseui-idp-icon" alt="" src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg">

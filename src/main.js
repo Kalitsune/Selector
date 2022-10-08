@@ -35,6 +35,7 @@ const store = createStore({
         return {
             lists: [],
             isMobile: false,
+            needLogin: false,
         }
     },
     mutations: {
@@ -43,6 +44,9 @@ const store = createStore({
         },
         setIsMobile(state, isMobile) {
             state.isMobile = isMobile;
+        },
+        needLogin(state, needLogin) {
+            state.needLogin = needLogin;
         }
     }
 })

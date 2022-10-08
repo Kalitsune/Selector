@@ -1,5 +1,5 @@
 <template>
-  <popup-login href="popupLogin"/>
+  <login v-if="needLogin" :handler="loggedIn" expired class="backdrop-blur-lg" />
 
   <Topbar @toggleSidebar="toggleSidebar"/>
   <Sidebar :collapsed="sidebarCollapsed"/>
@@ -8,7 +8,7 @@
 <script>
 import Sidebar from "../components/Sidebar.vue";
 import Topbar from "../components/Topbar.vue";
-import PopupLogin from "../components/PopupLogin.vue";
+import Login from "../components/Login.vue";
 
 export default {
   name: "App",
@@ -16,6 +16,9 @@ export default {
     toggleSidebar() {
       this.sidebarCollapsed = !this.sidebarCollapsed;
     },
+    loggedIn() {
+      this.$store.commit('needLogin', false)
+    }
   },
   mounted() {
     this.$api.getLists();
@@ -25,7 +28,12 @@ export default {
       sidebarCollapsed: !this.$store.state.isMobile,
     };
   },
-  components: {PopupLogin, Topbar, Sidebar}
+  computed: {
+    needLogin() {
+      return this.$store.state.needLogin;
+    },
+  },
+  components: {Login, Topbar, Sidebar}
 }
 </script>
 
