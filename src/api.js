@@ -55,14 +55,21 @@ export default {
         let props = app.config.globalProperties
         props.$api = {
             deleteList(list) {
+                const listId = list.id;
+                //disable the button
+                list.id = 0;
+
                 //delete the list
-                _deleteList(list.id).then(() => {
+                _deleteList(listId).then(() => {
                     //remove the deleted list from the lists array
                     props.$store.commit("setLists", props.$store.state.lists.filter(i => i.id !== list.id));
 
                     //redirect to the first list of the array
                     props.$router.push({name: "app", params: {listId: props.$store.state.lists[0].id, mode: "view"}});
                 }).catch(statusCode => {
+                    //enable the button back
+                    list.id = listId;
+
                     //check if the status code is 401
                     if (statusCode === 401) {
                         //popup the login page
