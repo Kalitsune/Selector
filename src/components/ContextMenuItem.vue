@@ -14,6 +14,10 @@ export default {
         return;
       }
 
+      //close the context menu
+      this.$parent.close();
+
+      //call the handler
       this.handler(this.list);
     },
   },

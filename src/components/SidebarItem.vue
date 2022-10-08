@@ -25,6 +25,12 @@ export default {
       this.$router.push({name: "app", params: {listId: this.list.id, mode: this.$route.params.mode}});
     },
     openContextMenu(evt) {
+      if (this.disabled) {
+        evt.preventDefault();
+        evt.stopPropagation();
+        return;
+      }
+
       //get the coordinates of the click
       let x = evt.pageX || evt.clientX;
       let y = evt.pageY || evt.clientY;
