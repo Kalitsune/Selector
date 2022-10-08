@@ -34,7 +34,7 @@ export default {
   },
   data() {
     return {
-      sidebarCollapsed: !this.$store.state.isMobile,
+      sidebarCollapsed: this.isMobile(),
     };
   },
   created() {
