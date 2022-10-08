@@ -42,6 +42,14 @@ const store = createStore({
         setLists(state, lists) {
             state.lists = lists;
         },
+        activateList(state, list) {
+            state.lists = state.lists.map(i => {
+                if (i.name === list.name && i.id === 0) {
+                    i = list;
+                }
+                return i;
+            });
+        },
         setIsMobile(state, isMobile) {
             state.isMobile = isMobile;
         },

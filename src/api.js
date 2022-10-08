@@ -15,7 +15,7 @@ function _deleteList(listId) {
 function _createList(list) {
     //create a list on the api
     return new Promise((resolve, reject) => {
-        fetch('/api/list', {
+        fetch('/api/lists', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -54,6 +54,22 @@ export default {
     install(app, options) {
         let props = app.config.globalProperties
         props.$api = {
+            createList(list) {
+                //create a disabled list with the given name
+                props.$store.commit("setLists", [...props.$store.state.lists, {name: list.name, id: 0}]);
+
+                //create a list on the api
+                _createList(list).then(list => {
+                    props.$store.commit("activateList", list);
+                }).catch(statusCode => {
+                    //if the user is not authenticated, popup the login page
+                    if (statusCode === 401) {
+                        handleAuth(props).then(() => {
+                            this.createList(list);
+                        })
+                    }
+                });
+            },
             deleteList(list) {
                 const listId = list.id;
                 //disable the button
@@ -73,7 +89,7 @@ export default {
                     //enable the button back
                     list.id = listId;
 
-                    //check if the status code is 401
+                    //if the user is not authenticated, popup the login page
                     if (statusCode === 401) {
                         //popup the login page
                         handleAuth(props).then(() => {
@@ -90,29 +106,6 @@ export default {
                 });
 
             },
-            refreshLists() {
-                //get the lists from the api
-                props.$api.getLists().then((lists) => {
-                    //complete the values of the params and check if they're valid
-                    const listId = lists.find(i => i.id === props.$route.params.listId) ? props.$route.params.listId : lists[0].id;
-                    const mode = ["view", "edit"].includes(props.$route.params.mode) ? props.$route.params.mode : "view";
-
-                    //redirect to the app page
-                    props.$router.push({ name: "app", params: { listId, mode } });
-
-                    //populate the list
-                    props.$store.commit("setLists", lists);
-                }).catch(statusCode => {
-                    //check if the status code is 401
-                    if (statusCode === 401) {
-                        //popup the login page
-                        handleAuth(props).then(() => {
-                            //get the lists again
-                            this.getLists();
-                        });
-                    }
-                });
-            },
             getLists() {
                 //get the lists from the api
                 return new Promise((resolve, reject) => {
@@ -126,7 +119,31 @@ export default {
                         }
                     })
                 })
-            }
+            },
+            refreshLists() {
+                //get the lists from the api
+                props.$api.getLists().then((lists) => {
+                    //complete the values of the params and check if they're valid
+                    const listId = lists.find(i => i.id === props.$route.params.listId) ? props.$route.params.listId : lists[0].id;
+                    const mode = ["view", "edit"].includes(props.$route.params.mode) ? props.$route.params.mode : "view";
+
+                    //redirect to the app page
+                    props.$router.push({ name: "app", params: { listId, mode } });
+
+                    //populate the list
+                    props.$store.commit("setLists", lists);
+                }).catch(statusCode => {
+
+                    //if the user is not authenticated, popup the login page
+                    if (statusCode === 401) {
+                        //popup the login page
+                        handleAuth(props).then(() => {
+                            //refresh the lists
+                            this.refreshLists();
+                        });
+                    }
+                });
+            },
         }
     },
 }

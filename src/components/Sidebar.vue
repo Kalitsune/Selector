@@ -2,9 +2,9 @@
   <!-- sidebar items context menu -->
   <context-menu ref="SidebarItemsContextMenu" v-slot="slotProps">
     <context-menu-item icon="fas fa-pencil" text="Rename" type="disabled" tooltip="Renomez ou changez l'icone de votre liste" :list="slotProps.list"/>
-    <context-menu-item icon="fas fa-clone" text="Duplicate" type="disabled" tooltip="Maintenant vous en avez deux !" :list="slotProps.list"/>
+    <context-menu-item :handler="$api.createList" icon="fas fa-clone" text="Duplicate" type="classic" tooltip="Maintenant vous en avez deux !" :list="slotProps.list"/>
     <context-menu-item icon="fas fa-share-nodes" text="Share" type="disabled" tooltip="Obtenez un lien partageable pour vôtre liste !" :list="slotProps.list"/>
-    <context-menu-item :handler="deleteList" icon="fas fa-trash-can" text="Delete" type="destructive" tooltip="Suprimme vôtre liste de manière définitive." :list="slotProps.list"/>
+    <context-menu-item :handler="$api.deleteList" icon="fas fa-trash-can" text="Delete" type="destructive" tooltip="Suprimme vôtre liste de manière définitive." :list="slotProps.list"/>
   </context-menu>
 
   <!-- sidebar context menu -->
@@ -60,10 +60,6 @@ export default {
 
       //open the context menu
       this.$refs.SidebarContextMenu.open({x, y, list: {name: "sidebar", id: 0}});
-    },
-    deleteList(list) {
-      //delete the list using the api easy handler
-      this.$api.deleteList(list);
     }
   },
   computed: {
