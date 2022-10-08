@@ -1,6 +1,5 @@
 import { createApp } from 'vue'
 import { createStore } from 'vuex'
-import vueCookies from 'vue-cookies'
 import { createRouter, createWebHistory } from 'vue-router'
 
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -59,9 +58,6 @@ const store = createStore({
     }
 })
 app.use(store)
-
-//use vue-cookies to check the presence of some cookies
-app.use(vueCookies)
 
 //use api plugin
 app.use(api)
