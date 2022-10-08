@@ -21,7 +21,7 @@ export default {
     }
   },
   mounted() {
-    this.$api.getLists();
+    this.$api.refreshLists();
   },
   data() {
     return {

@@ -81,10 +81,11 @@ export default {
                         props.$router.push({name: "app", params: {listId: props.$store.state.lists[0].id, mode: "view"}});
                     }
                 });
+
             },
-            getLists() {
+            refreshLists() {
                 //get the lists from the api
-                this._getLists().then((lists) => {
+                props.$api.getLists().then((lists) => {
                     //complete the values of the params and check if they're valid
                     const listId = lists.find(i => i.id === props.$route.params.listId) ? props.$route.params.listId : lists[0].id;
                     const mode = ["view", "edit"].includes(props.$route.params.mode) ? props.$route.params.mode : "view";
@@ -105,7 +106,7 @@ export default {
                     }
                 });
             },
-            _getLists() {
+            getLists() {
                 //get the lists from the api
                 return new Promise((resolve, reject) => {
                     fetch('/api/lists').then(response => {

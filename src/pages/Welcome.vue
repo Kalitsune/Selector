@@ -5,7 +5,7 @@
       components: {Login },
       mounted() {
         //check if the user is authenticated
-        this.$api._getLists().then(lists => {
+        this.$api.getLists().then(lists => {
           if (lists.constructor === Array) {
             //redirect to the app page
             this.toApp();
