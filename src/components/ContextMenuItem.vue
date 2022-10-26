@@ -23,8 +23,8 @@ export default {
   },
   props: {
     list: {
-      type: [Object, Function],
-      default: {},
+      type: Object,
+      required: false,
     },
     icon: String,
     text: String,
@@ -44,7 +44,7 @@ export default {
 <style scoped>
 .context-menu-item {
   @apply flex flex-row items-center justify-start rounded-lg cursor-pointer
-          p-4 lg:p-2 h-full w-full
+          p-4 lg:p-2 h-full w-full mr-14
           text-xl lg:text-base
 }
 

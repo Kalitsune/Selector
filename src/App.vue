@@ -1,6 +1,9 @@
 <template>
-  <div class="h-screen w-screen bg-neutral-200 dark:bg-neutral-800 overflow-hidden">
-    <login v-if="needLogin" :handler="loggedIn" expired class="backdrop-blur" />
+  <div class="h-screen w-screen bg-neutral-200 dark:bg-neutral-800 overflow-hidden" @contextmenu="openContextMenu">
+
+    <context-menu ref="ContextMenu"/>
+
+    <login v-if="needLogin" :handler="loggedIn" class="backdrop-blur" />
 
     <Topbar @toggleSidebar="toggleSidebar"/>
     <Sidebar :collapsed="sidebarCollapsed"/>
@@ -8,9 +11,10 @@
 </template>
 
 <script>
-import Sidebar from "../components/Sidebar.vue";
-import Topbar from "../components/Topbar.vue";
-import Login from "../components/Login.vue";
+import Sidebar from "./components/Sidebar.vue";
+import Topbar from "./components/Topbar.vue";
+import Login from "./components/Login.vue";
+import ContextMenu from "./components/ContextMenu.vue";
 
 export default {
   name: "App",
@@ -27,6 +31,18 @@ export default {
     updateIsMobile() {
       //handle resize operation
       this.$store.commit("setIsMobile", this.isMobile());
+    },
+    openContextMenu(event) {
+      //get the coordinates of the click
+      let x = event.pageX || event.clientX;
+      let y = event.pageY || event.clientY;
+
+      //prevent the default context menu and prevent triggering other events
+      event.preventDefault();
+      event.stopPropagation();
+
+      //open the context menu
+      this.$refs.ContextMenu.open({x, y, menu: "blank"});
     }
   },
   mounted() {
@@ -49,7 +65,7 @@ export default {
       return this.$store.state.needLogin;
     },
   },
-  components: {Login, Topbar, Sidebar}
+  components: {Login, Topbar, Sidebar, ContextMenu}
 }
 </script>
 

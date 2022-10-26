@@ -4,7 +4,7 @@
       <div class="px-1/4">
         <img class="hidden dark:block" src="../assets/selector-dark.svg" alt="Selector logo"/>
         <img class="block dark:hidden" id="logo-light" src="../assets/selector.svg" alt="Selector logo"/>
-        <p v-if="expired" class="text-base md:text-lg text-neutral-500 dark:text-neutral-200">Connexion requise</p>
+        <p class="text-base md:text-lg text-neutral-500 dark:text-neutral-200">Connexion requise</p>
       </div>
       <GoogleSignInButton :handler="handler" class="w-full"/>
     </div>
@@ -17,10 +17,6 @@ export default {
   name: "Login",
   components: {GoogleSignInButton},
   props: {
-    expired: {
-      type: Boolean,
-      default: false,
-    },
     handler: {
       type: Function,
       default: () => {},

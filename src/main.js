@@ -6,12 +6,12 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import {fas} from '@fortawesome/free-solid-svg-icons'
 
-import api from './api.js'
+import api from './plugins/api.js'
 
 library.add(fas)
 
 import css from './index.css'
-import App from './pages/App.vue'
+import App from './App.vue'
 
 let app = createApp(App)
 

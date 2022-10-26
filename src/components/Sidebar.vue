@@ -1,25 +1,11 @@
 <template>
-  <!-- sidebar items context menu -->
-  <context-menu ref="SidebarItemsContextMenu" v-slot="slotProps">
-    <context-menu-item icon="fas fa-pencil" text="Rename" type="disabled" tooltip="Renomez ou changez l'icone de votre liste" :list="slotProps.list"/>
-    <context-menu-item :handler="$api.createList" icon="fas fa-clone" text="Duplicate" type="classic" tooltip="Maintenant vous en avez deux !" :list="slotProps.list"/>
-    <context-menu-item icon="fas fa-share-nodes" text="Share" type="disabled" tooltip="Obtenez un lien partageable pour vôtre liste !" :list="slotProps.list"/>
-    <context-menu-item :handler="$api.deleteList" icon="fas fa-trash-can" text="Delete" type="destructive" tooltip="Suprimme vôtre liste de manière définitive." :list="slotProps.list"/>
-  </context-menu>
-
-  <!-- sidebar context menu -->
-  <context-menu ref="SidebarContextMenu" v-slot="slotProps">
-    <context-menu-item icon="fas fa-plus" text="Create" type="disabled" tooltip="Créez une nouvelle liste." :list="slotProps.list"/>
-    <context-menu-item :handler="$api.refreshLists" icon="fas fa-arrows-rotate" text="Refresh" type="classic" tooltip="Vos listes ne sont pas à jour? actualisez les !" :list="slotProps.list"/>
-  </context-menu>
-
   <!-- sidebar -->
-  <div :class="{'collapsed': collapsed, 'isMobile': isMobile}" class="sidebar" @contextmenu="openSidebarContextMenu" >
+  <div :class="{'collapsed': collapsed, 'isMobile': isMobile}" class="sidebar" @contextmenu="openContextMenu" >
     <!-- sidebar items -->
     <ul>
       <!-- array of lists -->
       <li v-if="lists.length > 0" v-for="list in lists">
-        <SidebarItem :list="list" :disabled="isDisabled(list)" :isSelected="isSelected(list)" @closeContextMenu="this.$refs.SidebarItemsContextMenu.close()" @openContextMenu="evtData => this.$refs.SidebarItemsContextMenu.open(evtData)"/>
+        <SidebarItem :list="list" :disabled="isDisabled(list)" :isSelected="isSelected(list)" @closeContextMenu="this.$root.$refs.ContextMenu.close()" @openContextMenu="evtData => this.$root.$refs.ContextMenu.open(evtData)"/>
       </li>
 
       <!-- if there's no list -->
@@ -49,7 +35,7 @@ export default {
       //check if the provided element is currently disabled
       return list.id === 0;
     },
-    openSidebarContextMenu(event) {
+    openContextMenu(event) {
       //get the coordinates of the click
       let x = event.pageX || event.clientX;
       let y = event.pageY || event.clientY;
@@ -59,7 +45,7 @@ export default {
       event.stopPropagation();
 
       //open the context menu
-      this.$refs.SidebarContextMenu.open({x, y, list: {name: "sidebar", id: 0}});
+      this.$root.$refs.ContextMenu.open({x, y, menu: "sidebar"});
     }
   },
   computed: {

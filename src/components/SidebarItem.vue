@@ -40,7 +40,7 @@ export default {
       evt.stopPropagation();
 
       //open the context menu
-      this.$emit('openContextMenu', {x, y, list: this.list})
+      this.$emit('openContextMenu', {x, y, menu: 'sidebar_item', list: this.list});
     }
   },
   computed: {
