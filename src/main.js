@@ -2,13 +2,7 @@ import { createApp } from 'vue'
 import { createStore } from 'vuex'
 import { createRouter, createWebHistory } from 'vue-router'
 
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import {fas} from '@fortawesome/free-solid-svg-icons'
-
 import api from './plugins/api.js'
-
-library.add(fas)
 
 import css from './index.css'
 import App from './App.vue'
@@ -55,6 +49,12 @@ const store = createStore({
     }
 })
 app.use(store)
+
+//use fontawesome
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import {fas} from '@fortawesome/free-solid-svg-icons'
+library.add(fas)
 
 //use api plugin
 app.use(api)

@@ -2,17 +2,11 @@
 <div class="context-menu" :class="{'isMobile': isMobile}" v-show="visible" :style="style" ref="context" tabindex="0" @blur="close">
   <p v-if="isMobile && list !== undefined" class="text-neutral-400 w-full">{{list.name}}</p>
   <slot :list="list">
-    <template v-if="menu === 'sidebar_item'">
-      <context-menu-item icon="fas fa-pencil" text="Rename" type="disabled" tooltip="Renomez ou changez l'icone de votre liste" :list="list"/>
-      <context-menu-item :handler="$api.createList" icon="fas fa-clone" text="Duplicate" type="classic" tooltip="Maintenant vous en avez deux !" :list="list"/>
-      <context-menu-item icon="fas fa-share-nodes" text="Share" type="disabled" tooltip="Obtenez un lien partageable pour vôtre liste !" :list="list"/>
-      <context-menu-item :handler="$api.deleteList" icon="fas fa-trash-can" text="Delete" type="destructive" tooltip="Suprimme vôtre liste de manière définitive." :list="list"/>
-    </template>
+    <!-- ../contextMenu/contexts/ContextMenuSidebarItems.vue -->
+    <ContextMenuSidebarItems v-if="menu === 'sidebar_item'" :list="list"/>
 
-    <template v-else-if="menu === 'sidebar'">
-      <context-menu-item icon="fas fa-plus" text="Create" type="disabled" tooltip="Créez une nouvelle liste."/>
-      <context-menu-item :handler="$api.refreshLists" icon="fas fa-arrows-rotate" text="Refresh" type="classic" tooltip="Vos listes ne sont pas à jour? actualisez les !"/>
-    </template>
+    <!-- ../contextMenu/contexts/ContextMenuSidebar.vue -->
+    <context-menu-sidebar v-else-if="menu === 'sidebar'"/>
 
     <template v-else>
       <context-menu-item icon="fa-solid fa-ban" text="There's nothing here" type="disabled"/>
@@ -24,9 +18,11 @@
 
 <script>
 import ContextMenuItem from "./ContextMenuItem.vue";
+import ContextMenuSidebarItems from "./contexts/ContextMenuSidebarItems.vue";
+import ContextMenuSidebar from "./contexts/ContextMenuSidebar.vue";
 export default {
   name: "ContextMenu",
-  components: {ContextMenuItem},
+  components: {ContextMenuSidebar, ContextMenuSidebarItems, ContextMenuItem},
   methods: {
     close() {
       this.visible = false;

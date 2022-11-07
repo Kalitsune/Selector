@@ -15,7 +15,7 @@ export default {
       }
 
       //close the context menu
-      this.$parent.close();
+      this.$root.$refs.ContextMenu.close();
 
       //call the handler
       this.handler(this.list);
