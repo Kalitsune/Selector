@@ -20,8 +20,8 @@
 <script>
 
 import SidebarItem from "./SidebarItem.vue";
-import ContextMenu from "./ContextMenu.vue";
-import ContextMenuItem from "./ContextMenuItem.vue";
+import ContextMenu from "../contextMenu/ContextMenu.vue";
+import ContextMenuItem from "../contextMenu/ContextMenuItem.vue";
 
 export default {
   name: "Sidebar",

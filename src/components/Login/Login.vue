@@ -2,8 +2,8 @@
   <div class="fixed left-0 top-0 grid w-screen h-screen place-items-center">
     <div class="md:w-1/4 w-1/2 flex flex-col justify-center space-y-10 text-center">
       <div class="px-1/4">
-        <img class="hidden dark:block" src="../assets/selector-dark.svg" alt="Selector logo"/>
-        <img class="block dark:hidden" id="logo-light" src="../assets/selector.svg" alt="Selector logo"/>
+        <img class="hidden dark:block" src="../../assets/selector-dark.svg" alt="Selector logo"/>
+        <img class="block dark:hidden" id="logo-light" src="../../assets/selector.svg" alt="Selector logo"/>
         <p class="text-base md:text-lg text-neutral-500 dark:text-neutral-200">Connexion requise</p>
       </div>
       <GoogleSignInButton :handler="handler" class="w-full"/>
@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import GoogleSignInButton from '../components/GoogleSignInButton.vue';
+import GoogleSignInButton from './GoogleSignInButton.vue';
 export default {
   name: "Login",
   components: {GoogleSignInButton},

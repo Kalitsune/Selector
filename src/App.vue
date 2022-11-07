@@ -11,10 +11,10 @@
 </template>
 
 <script>
-import Sidebar from "./components/Sidebar.vue";
+import Sidebar from "./components/Sidebar/Sidebar.vue";
 import Topbar from "./components/Topbar.vue";
-import Login from "./components/Login.vue";
-import ContextMenu from "./components/ContextMenu.vue";
+import Login from "./components/Login/Login.vue";
+import ContextMenu from "./components/contextMenu/ContextMenu.vue";
 
 export default {
   name: "App",
