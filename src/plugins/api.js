@@ -55,6 +55,9 @@ export default {
         let props = app.config.globalProperties
         props.$api = {
             createList(list) {
+                //if no list is provided add a default name
+                list = list || { name: "New List" };
+
                 //create a disabled list with the given name
                 props.$store.commit("setLists", [...props.$store.state.lists, {name: list.name, id: 0}]);
 
