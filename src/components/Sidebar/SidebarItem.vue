@@ -32,15 +32,15 @@ export default {
       }
 
       //get the coordinates of the click
-      let x = evt.pageX || evt.clientX;
-      let y = evt.pageY || evt.clientY;
+      let left = evt.pageX || evt.clientX;
+      let top = evt.pageY || evt.clientY;
 
       //prevent the default context menu and prevent triggering other events
       evt.preventDefault();
       evt.stopPropagation();
 
       //open the context menu
-      this.$emit('openContextMenu', {x, y, menu: 'sidebar_item', list: this.list});
+      this.$emit('openContextMenu', {left, top, menu: 'sidebar_item', list: this.list});
     }
   },
   computed: {

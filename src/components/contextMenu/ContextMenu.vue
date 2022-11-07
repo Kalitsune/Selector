@@ -28,20 +28,41 @@ export default {
       this.visible = false;
     },
     open(evtData) {
+      //define the menu config from the event data
       this.visible = true;
-      this.x = evtData.x;
-      this.y = evtData.y;
+      this.left = evtData.left + "px";
+      this.top = evtData.top + "px";
+      this.right = "auto";
+      this.bottom = "auto";
       this.menu = evtData.menu;
       this.list = evtData.list;
-      this.$nextTick(() => this.$el.focus());
+
+      //wait for the element to render
+      this.$nextTick(() => {
+        //check for X axis overflow
+        if (this.$el.getBoundingClientRect().right > window.innerWidth) {
+          this.left = "auto";
+          this.right = "0px";
+        }
+        //check for Y axis overflow
+        if (this.$el.getBoundingClientRect().bottom > window.innerHeight) {
+          this.top = "auto";
+          this.bottom = "0px";
+        }
+        //focus the element
+        this.$el.focus()
+
+      });
     }
   },
   computed: {
     // get position of context menu
     style() {
       return {
-        left: this.$store.state.isMobile ? '0px' : this.x + 'px',
-        top: this.$store.state.isMobile ? 'auto' : this.y + 'px',
+        left: this.$store.state.isMobile ? '0px' : this.left,
+        right: this.$store.state.isMobile ? '0px' : this.right,
+        top: this.$store.state.isMobile ? 'auto' : this.top,
+        bottom: this.$store.state.isMobile ? '0px' : this.bottom,
       };
     },
     isMobile() {
@@ -52,10 +73,13 @@ export default {
   data() {
     return {
       visible: false,
-      x: Number,
-      y: Number,
+      left: String,
+      right: String,
+      top: String,
+      bottom: String,
       list: Object,
       menu: "blank",
+      reversed: false,
     }
   }
 }

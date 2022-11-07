@@ -37,15 +37,15 @@ export default {
     },
     openContextMenu(event) {
       //get the coordinates of the click
-      let x = event.pageX || event.clientX;
-      let y = event.pageY || event.clientY;
+      let left = event.pageX || event.clientX;
+      let top = event.pageY || event.clientY;
 
       //prevent the default context menu and prevent triggering other events
       event.preventDefault();
       event.stopPropagation();
 
       //open the context menu
-      this.$root.$refs.ContextMenu.open({x, y, menu: "sidebar"});
+      this.$root.$refs.ContextMenu.open({left, top, menu: "sidebar"});
     }
   },
   computed: {
