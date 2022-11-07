@@ -9,7 +9,7 @@
 import ContextMenuItem from "../ContextMenuItem.vue";
 
 export default {
-  name: "ContextMenuSidebarItems",
+  name: "CtxMenuSidebarItems",
   props: {
     list: Object,
   },

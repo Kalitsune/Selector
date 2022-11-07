@@ -2,10 +2,10 @@
 <div class="context-menu" :class="{'isMobile': isMobile}" v-show="visible" :style="style" ref="context" tabindex="0" @blur="close">
   <p v-if="isMobile && list !== undefined" class="text-neutral-400 w-full">{{list.name}}</p>
   <slot :list="list">
-    <!-- ../contextMenu/contexts/ContextMenuSidebarItems.vue -->
+    <!-- ../contextMenu/contexts/CtxSidebarItems.vue -->
     <ContextMenuSidebarItems v-if="menu === 'sidebar_item'" :list="list"/>
 
-    <!-- ../contextMenu/contexts/ContextMenuSidebar.vue -->
+    <!-- ../contextMenu/contexts/CtxSidebar.vue -->
     <context-menu-sidebar v-else-if="menu === 'sidebar'"/>
 
     <template v-else>
@@ -18,8 +18,8 @@
 
 <script>
 import ContextMenuItem from "./ContextMenuItem.vue";
-import ContextMenuSidebarItems from "./contexts/ContextMenuSidebarItems.vue";
-import ContextMenuSidebar from "./contexts/ContextMenuSidebar.vue";
+import ContextMenuSidebarItems from "./contexts/CtxSidebarItems.vue";
+import ContextMenuSidebar from "./contexts/CtxSidebar.vue";
 export default {
   name: "ContextMenu",
   components: {ContextMenuSidebar, ContextMenuSidebarItems, ContextMenuItem},

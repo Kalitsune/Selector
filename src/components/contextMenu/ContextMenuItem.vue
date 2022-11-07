@@ -34,7 +34,7 @@ export default {
       type: String,
       default: "classic",
       validator(value) {
-        return ['classic', 'primary', 'destructive', 'disabled'].includes(value)
+        return ['classic', 'destructive', 'disabled'].includes(value)
       }
     }
   }
