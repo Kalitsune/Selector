@@ -59,7 +59,7 @@ export default {
                 list = list || { name: "New List" };
 
                 //create a disabled list with the given name
-                props.$store.commit("setLists", [...props.$store.state.lists, {name: list.name, id: 0}]);
+                props.$store.commit("setLists", [{name: list.name, id: 0}, ...props.$store.state.lists]);
 
                 //create a list on the api
                 _createList(list).then(list => {
