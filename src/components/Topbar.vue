@@ -28,7 +28,7 @@
     <span class="justify-self-end">
       <!-- Trigger for the contentBar -->
       <button class="hidden md:block" @click="toggleContentBar">
-        <font-awesome-icon icon="fa-solid fa-layer-group" class="align-middle h-7 text-primary-light-500 dark:text-primary-dark-700 pr-7 md:pl-6" />
+        <font-awesome-icon icon="fa-solid fa-cubes" class="align-middle h-7 text-primary-light-500 dark:text-primary-dark-700 pr-7 md:pl-6" />
       </button>
     </span>
   </span>

@@ -2,19 +2,20 @@
   <!-- content bar -->
   <div :class="{'collapsed': collapsed, 'isMobile': isMobile}" class="content-bar" @contextmenu="openContextMenu" >
     <!-- content bar title -->
-    <div class="font-semibold text-center pt-5 text-accent-400">
+    <div class="font-semibold pt-5 text-accent-400">
       <h1>Contenu de la liste</h1>
     </div>
-    <!-- content bar items -->
-    <ul>
-      <!-- list content -->
-      <li v-if="!isDisabled(list)" v-for="element in list.elements">
 
+    <!-- content bar items -->
+    <ul class="w-11/12">
+      <!-- list content -->
+      <li v-if="!isDisabled(list) && list?.elements?.length > 0" v-for="element in list.elements">
+        <ContentItem :element="element" />
       </li>
 
       <!-- if the list is empty -->
       <li v-else>
-
+        <ContentItem :element="{name:'There\'s nothing here yet...'}" disabled />
       </li>
     </ul>
   </div>
@@ -25,10 +26,11 @@
 
 import ContextMenu from "../contextMenu/ContextMenu.vue";
 import ContextMenuItem from "../contextMenu/ContextMenuItem.vue";
+import ContentItem from "./ContentItem.vue";
 
 export default {
   name: "ContentBar",
-  components: {ContextMenu, ContextMenuItem},
+  components: {ContextMenu, ContextMenuItem, ContentItem},
   methods: {
     isDisabled(list) {
       //check if the provided element is currently disabled
@@ -53,9 +55,9 @@ export default {
       return this.$store.state.isMobile;
     },
     list() {
-        //make the list available to the template
-        return this.$store.state.lists.find(list => list.id === this.$route.params.listId);
-      }
+      //make the list available to the template
+      return this.$store.state.lists.find(list => list.id === this.$route.params.listId);
+    }
   },
   props: {
     collapsed: {
@@ -68,7 +70,8 @@ export default {
 
 <style scoped>
 .content-bar:not(.isMobile) {
-  @apply w-96 bg-neutral-50 dark:bg-neutral-700 h-full transition-all ease-in-out duration-500 flex flex-col overflow-y-scroll pb-6 float-right;
+  @apply w-96 bg-neutral-50 dark:bg-neutral-700 h-full transition-all ease-in-out duration-500 flex flex-col
+  overflow-y-scroll pb-6 float-right items-center;
 }
 .collapsed.content-bar:not(.isMobile) {
   @apply translate-x-full;
