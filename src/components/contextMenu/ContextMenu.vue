@@ -1,4 +1,7 @@
 <template>
+<!-- detect touch outside the context menu on every platform (mainly here for mobile devices) -->
+<div v-show="visible" class="w-screen h-screen block fixed top-0 left-0 z-40" @click="close()"/>
+
 <div class="context-menu" :class="{'isMobile': isMobile}" v-show="visible" :style="style" ref="context" tabindex="0" @blur="close">
   <p v-if="isMobile && list !== undefined" class="text-neutral-400 w-full">{{list.name}}</p>
   <slot :list="list">
@@ -46,17 +49,17 @@ export default {
       //wait for the element to render
       this.$nextTick(() => {
         //check for X axis overflow
-        if (this.$el.getBoundingClientRect().right > window.innerWidth) {
+        if (this.$refs.context.getBoundingClientRect().right > window.innerWidth) {
           this.left = "auto";
           this.right = "0px";
         }
         //check for Y axis overflow
-        if (this.$el.getBoundingClientRect().bottom > window.innerHeight) {
+        if (this.$refs.context.getBoundingClientRect().bottom > window.innerHeight) {
           this.top = "auto";
           this.bottom = "0px";
         }
         //focus the element
-        this.$el.focus()
+        this.$refs.context.focus()
 
       });
     }
