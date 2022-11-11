@@ -21,6 +21,11 @@ export default {
   },
   methods: {
     switchList() {
+      // if the user is using the mobile interface, close the sidebar
+      if (this.$store.state.isMobile) {
+        this.$root.toggleSidebar();
+      }
+
       //redirect to the new url by replacing the list parameter
       this.$router.push({name: "app", params: {listId: this.list.id, mode: this.$route.params.mode}});
     },
