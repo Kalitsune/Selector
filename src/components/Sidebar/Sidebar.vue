@@ -5,7 +5,7 @@
     <ul>
       <!-- array of lists -->
       <li v-if="lists.length > 0" v-for="list in lists">
-        <SidebarItem :list="list" :disabled="isDisabled(list)" :isSelected="isSelected(list)" @closeContextMenu="this.$root.$refs.ContextMenu.close()" @openContextMenu="evtData => this.$root.$refs.ContextMenu.open(evtData)"/>
+        <SidebarItem :list="list" :disabled="isDisabled(list)" :isSelected="isSelected(list)" @openContextMenu="evtData => this.$root.$refs.ContextMenu.open(evtData)"/>
       </li>
 
       <!-- if there's no list -->

@@ -24,8 +24,14 @@ export default {
   name: "ContextMenu",
   components: {ContextMenuSidebar, ContextMenuSidebarItems, ContextMenuItem},
   methods: {
-    close() {
-      this.visible = false;
+    close(condition) {
+      //check if there are no conditions provided
+      if (condition === undefined) {
+        this.visible = false;
+      // check if the condition provided a list that match with the current one
+      } else if (condition.list === this.list) {
+        this.visible = false;
+      }
     },
     open(evtData) {
       //define the menu config from the event data

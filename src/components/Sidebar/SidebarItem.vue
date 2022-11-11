@@ -49,10 +49,6 @@ export default {
       return this.$store.state.isMobile;
     }
   },
-  unmounted() {
-    //emit an event to the parent component to close the context menu
-    this.$emit('closeContextMenu');
-  }
 }
 </script>
 
