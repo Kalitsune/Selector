@@ -67,21 +67,19 @@ export default {
 </script>
 
 <style scoped>
-.content-bar {
-  @apply h-full transition-all ease-in-out duration-500 flex flex-col overflow-y-scroll pb-6 float-right;
-}
-
 .content-bar:not(.isMobile) {
-  @apply w-96 bg-neutral-50 dark:bg-neutral-700;
+  @apply w-96 bg-neutral-50 dark:bg-neutral-700 h-full transition-all ease-in-out duration-500 flex flex-col overflow-y-scroll pb-6 float-right;
 }
 .collapsed.content-bar:not(.isMobile) {
   @apply translate-x-full;
 }
 
+/*TODO: implement content bar on the mobile interface*/
+
 .content-bar.isMobile {
-  @apply w-screen bottom-0 bg-neutral-200 dark:bg-neutral-800 opacity-100;
+  @apply hidden;
 }
 .collapsed.content-bar.isMobile {
-  @apply translate-y-full opacity-0;
+  @apply hidden;
 }
 </style>

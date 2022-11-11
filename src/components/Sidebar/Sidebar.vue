@@ -80,7 +80,7 @@ export default {
 }
 
 .sidebar.isMobile {
-  @apply w-screen bottom-0 bg-neutral-200 dark:bg-neutral-800 opacity-100;
+  @apply w-screen left-0 bottom-0 bg-neutral-200 dark:bg-neutral-800 opacity-100;
 }
 .collapsed.sidebar.isMobile {
   @apply translate-y-full opacity-0;

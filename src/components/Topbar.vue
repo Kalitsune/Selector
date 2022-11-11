@@ -22,12 +22,12 @@
       </span>
     </span>
 
-    <span class="justify-self-center">Middle</span>
+    <span class="justify-self-center"></span>
 
     <!-- right side -->
     <span class="justify-self-end">
       <!-- Trigger for the contentBar -->
-      <button @click="toggleContentBar">
+      <button class="hidden md:block" @click="toggleContentBar">
         <font-awesome-icon icon="fa-solid fa-layer-group" class="align-middle h-7 text-primary-light-500 dark:text-primary-dark-700 pr-7 md:pl-6" />
       </button>
     </span>
