@@ -6,6 +6,7 @@
     <login v-if="needLogin" :handler="loggedIn" class="backdrop-blur" />
 
     <Topbar @toggleSidebar="toggleSidebar"/>
+    <content-bar :collapsed="contentBarCollapsed"/>
     <Sidebar :collapsed="sidebarCollapsed"/>
   </div>
 </template>
@@ -15,12 +16,16 @@ import Sidebar from "./components/Sidebar/Sidebar.vue";
 import Topbar from "./components/Topbar.vue";
 import Login from "./components/Login/Login.vue";
 import ContextMenu from "./components/contextMenu/ContextMenu.vue";
+import ContentBar from "./components/contentbar/Contentbar.vue";
 
 export default {
   name: "App",
   methods: {
     toggleSidebar() {
       this.sidebarCollapsed = !this.sidebarCollapsed;
+    },
+    toggleContentBar() {
+      this.contentBarCollapsed = !this.contentBarCollapsed;
     },
     loggedIn() {
       this.$store.commit('needLogin', false)
@@ -51,6 +56,7 @@ export default {
   data() {
     return {
       sidebarCollapsed: this.isMobile(),
+      contentBarCollapsed: this.isMobile(),
     };
   },
   created() {
@@ -65,7 +71,7 @@ export default {
       return this.$store.state.needLogin;
     },
   },
-  components: {Login, Topbar, Sidebar, ContextMenu}
+  components: {ContentBar, Login, Topbar, Sidebar, ContextMenu}
 }
 </script>
 

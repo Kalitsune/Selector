@@ -69,7 +69,7 @@ export default {
 
 <style scoped>
 .sidebar {
-  @apply left-0 top-0 h-full transition-all ease-in-out duration-500 flex flex-col overflow-y-scroll pb-6
+  @apply h-full transition-all ease-in-out duration-500 flex flex-col overflow-y-scroll pb-6;
 }
 
 .sidebar:not(.isMobile) {
