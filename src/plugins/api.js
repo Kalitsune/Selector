@@ -58,12 +58,10 @@ export default {
                 //if no list is provided add a default name
                 list = list || { name: "New List" };
 
-                //create a disabled list with the given name
-                props.$store.commit("setLists", [{name: list.name, id: 0}, ...props.$store.state.lists]);
-
                 //create a list on the api
                 _createList(list).then(list => {
-                    props.$store.commit("activateList", list);
+                    //add the list to the store
+                    props.$store.commit("setLists", [list, ...props.$store.state.lists]);
 
                     //select the new list
                     props.$router.push({name: "app", params: {listId: list.id}});
@@ -78,9 +76,6 @@ export default {
             },
             deleteList(list) {
                 const listId = list.id;
-                //disable the button
-                list.id = 0;
-
                 //delete the list
                 _deleteList(listId).then(() => {
                     //remove the deleted list from the lists array
