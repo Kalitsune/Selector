@@ -50,6 +50,21 @@ function handleAuth(props) {
     })
 }
 
+function _getLists() {
+    //get the lists from the api
+    return new Promise((resolve, reject) => {
+        fetch('/api/lists').then(response => {
+            if (response.ok) {
+                response.json().then(data => {
+                    resolve(data);
+                })
+            } else {
+                reject(response.status);
+            }
+        })
+    })
+}
+
 export default {
     install(app, options) {
         let props = app.config.globalProperties
@@ -107,23 +122,9 @@ export default {
                 });
 
             },
-            getLists() {
+            async refreshLists() {
                 //get the lists from the api
-                return new Promise((resolve, reject) => {
-                    fetch('/api/lists').then(response => {
-                        if (response.ok) {
-                            response.json().then(data => {
-                                resolve(data);
-                            })
-                        } else {
-                            reject(response.status);
-                        }
-                    })
-                })
-            },
-            refreshLists() {
-                //get the lists from the api
-                props.$api.getLists().then((lists) => {
+                await _getLists().then((lists) => {
                     //complete the values of the params and check if they're valid
                     const listId = lists.find(i => i.id === props.$route.params.listId) ? props.$route.params.listId : lists[0].id;
                     const mode = ["view", "edit"].includes(props.$route.params.mode) ? props.$route.params.mode : "view";
@@ -145,6 +146,29 @@ export default {
                     }
                 });
             },
+            getListById(listId) {
+                //get the list from the api
+                return new Promise((resolve, reject) => {
+                    fetch(`/api/list/${listId}`).then(response => {
+                        if (response.ok) {
+                            response.json().then(data => {
+                                //save the list in the store
+                                props.$store.commit("updateList", data);
+
+                                resolve(data);
+                            })
+                        } else {
+                            reject(response.status);
+                        }
+                    })
+                })
+            },
+            async cacheLists() {
+                //get every list from the api
+                props.$store.state.lists.forEach(list => {
+                    this.getListById(list.id);
+                })
+            }
         }
     },
 }

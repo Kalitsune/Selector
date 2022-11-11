@@ -50,8 +50,9 @@ export default {
       this.$refs.ContextMenu.open({left, top, menu: "blank"});
     }
   },
-  mounted() {
-    this.$api.refreshLists();
+  async mounted() {
+    await this.$api.refreshLists();
+    await this.$api.cacheLists()
   },
   data() {
     return {
