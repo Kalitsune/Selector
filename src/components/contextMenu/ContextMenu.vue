@@ -1,23 +1,19 @@
 <template>
-  <!-- detect touch outside the context menu on every platform (mainly here for mobile devices) -->
-  <div v-show="visible" class="w-screen h-screen block fixed top-0 left-0 z-40" @click="close()"/>
+<div class="context-menu" :class="{'isMobile': isMobile}" v-show="visible" :style="style" ref="context" tabindex="0" @blur="close">
+  <p v-if="isMobile && list !== undefined" class="text-neutral-400 w-full">{{list.name}}</p>
+  <slot :list="list">
+    <!-- ../contextMenu/contexts/CtxSidebarItems.vue -->
+    <ContextMenuSidebarItems v-if="menu === 'sidebar_item'" :list="list"/>
 
-  <!-- context menu -->
-  <div class="context-menu" :class="{'isMobile': isMobile}" v-show="visible" :style="style" ref="context" tabindex="0" @blur="close">
-    <p v-if="isMobile && list !== undefined" class="text-neutral-400 w-full">{{list.name}}</p>
-    <slot :list="list">
-      <!-- ../contextMenu/contexts/CtxSidebarItems.vue -->
-      <ContextMenuSidebarItems v-if="menu === 'sidebar_item'" :list="list"/>
+    <!-- ../contextMenu/contexts/CtxSidebar.vue -->
+    <context-menu-sidebar v-else-if="menu === 'sidebar'"/>
 
-      <!-- ../contextMenu/contexts/CtxSidebar.vue -->
-      <context-menu-sidebar v-else-if="menu === 'sidebar'"/>
+    <template v-else>
+      <context-menu-item icon="fa-solid fa-ban" text="There's nothing here" type="disabled"/>
+    </template>
 
-      <template v-else>
-        <context-menu-item icon="fa-solid fa-ban" text="There's nothing here" type="disabled"/>
-      </template>
-
-    </slot>
-  </div>
+  </slot>
+</div>
 </template>
 
 <script>
@@ -49,20 +45,19 @@ export default {
 
       //wait for the element to render
       this.$nextTick(() => {
-        if (!this.$store.state.isMobile) {
-          //check for X axis overflow
-          if (this.$el.getBoundingClientRect().right > window.innerWidth) {
-            this.left = "auto";
-            this.right = "0px";
-          }
-          //check for Y axis overflow
-          if (this.$el.getBoundingClientRect().bottom > window.innerHeight) {
-            this.top = "auto";
-            this.bottom = "0px";
-          }
-          //focus the element
-          this.$el.focus()
+        //check for X axis overflow
+        if (this.$el.getBoundingClientRect().right > window.innerWidth) {
+          this.left = "auto";
+          this.right = "0px";
         }
+        //check for Y axis overflow
+        if (this.$el.getBoundingClientRect().bottom > window.innerHeight) {
+          this.top = "auto";
+          this.bottom = "0px";
+        }
+        //focus the element
+        this.$el.focus()
+
       });
     }
   },
