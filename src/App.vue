@@ -2,6 +2,7 @@
   <div class="h-screen w-screen bg-neutral-200 dark:bg-neutral-800 overflow-hidden" @contextmenu="openContextMenu">
 
     <context-menu ref="ContextMenu"/>
+    <save-button ref="SaveButton"/>
 
     <login v-if="needLogin" :handler="loggedIn" class="backdrop-blur" />
 
@@ -17,6 +18,7 @@ import Topbar from "./components/Topbar.vue";
 import Login from "./components/Login/Login.vue";
 import ContextMenu from "./components/contextMenu/ContextMenu.vue";
 import ContentBar from "./components/contentbar/Contentbar.vue";
+import SaveButton from "./components/interactions/saveButton.vue";
 
 export default {
   name: "App",
@@ -72,7 +74,7 @@ export default {
       return this.$store.state.needLogin;
     },
   },
-  components: {ContentBar, Login, Topbar, Sidebar, ContextMenu}
+  components: {SaveButton, ContentBar, Login, Topbar, Sidebar, ContextMenu}
 }
 </script>
 
