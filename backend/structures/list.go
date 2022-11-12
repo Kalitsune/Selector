@@ -9,9 +9,9 @@ type List struct {
 }
 
 type RandomElements struct {
-	Name        string            `json:"name"`
-	Probability int               `json:"probability"`
-	Properties  map[string]string `json:"properties"`
+	Name        string   `json:"name"`
+	Probability int      `json:"probability"`
+	Tags        []string `json:"tags"`
 }
 
 // ToJSON returns the list as a json string
@@ -41,8 +41,8 @@ func (list *List) FromJSON(data []byte) error {
 		}
 
 		//check if the properties are correctly formed (not nil)
-		if element.Properties == nil {
-			element.Properties = make(map[string]string)
+		if element.Tags == nil {
+			element.Tags = []string{}
 		}
 
 		//add the element to the corrected elements array
