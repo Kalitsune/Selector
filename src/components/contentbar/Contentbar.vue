@@ -46,7 +46,7 @@ export default {
       event.stopPropagation();
 
       //open the context menu
-      this.$root.$refs.ContextMenu.open({left, top, menu: "sidebar"});
+      this.$root.$refs.ContextMenu.open({left, top, list: this.list, menu: "contentBar"});
     }
   },
   computed: {

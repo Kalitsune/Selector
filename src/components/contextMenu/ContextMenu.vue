@@ -11,9 +11,8 @@
     <!-- ../contextMenu/contexts/CtxSidebar.vue -->
     <context-menu-sidebar v-else-if="menu === 'sidebar'"/>
 
-    <template v-else>
-      <context-menu-item icon="fa-solid fa-ban" text="There's nothing here" type="disabled"/>
-    </template>
+    <!-- ../contextMenu/contexts/CtxSidebar.vue -->
+    <context-menu-content-bar v-else-if="menu === 'contentBar'" :list="list"/>
 
   </slot>
 </div>
@@ -23,9 +22,11 @@
 import ContextMenuItem from "./ContextMenuItem.vue";
 import ContextMenuSidebarItems from "./contexts/CtxSidebarItems.vue";
 import ContextMenuSidebar from "./contexts/CtxSidebar.vue";
+import ContextMenuContentBar from "./contexts/CtxContentBar.vue";
+
 export default {
   name: "ContextMenu",
-  components: {ContextMenuSidebar, ContextMenuSidebarItems, ContextMenuItem},
+  components: {ContextMenuSidebar, ContextMenuSidebarItems, ContextMenuItem, ContextMenuContentBar},
   methods: {
     close(condition) {
       //check if there are no conditions provided
