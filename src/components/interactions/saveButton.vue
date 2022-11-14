@@ -1,6 +1,6 @@
 <template>
-<span class="fixed left-1/2 -translate-x-1/2 h-16 bg-primary-light-50 dark:bg-primary-dark-900 bottom-5 rounded-xl p-2 px-3
-               grid md:grid-cols-2 place-content-center">
+<span :class="visible ? 'bottom-5' : '-bottom-full'" class="fixed left-1/2 -translate-x-1/2 h-16 bg-primary-light-50 dark:bg-primary-dark-900 rounded-xl
+               p-2 px-3 grid md:grid-cols-2 place-content-center transition-all ease-in-out delay-100">
 
   <!-- text area -->
   <span class="relative flex flex-row h-auto top-1/4 pl-2">
@@ -31,6 +31,7 @@
 export default {
   name: "saveButton",
   props: {
+    visible: Boolean,
     cancel: Function,
     save: Function,
   }

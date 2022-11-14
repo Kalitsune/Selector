@@ -2,7 +2,7 @@
   <div class="h-screen w-screen bg-neutral-200 dark:bg-neutral-800 overflow-hidden" @contextmenu="openContextMenu">
 
     <context-menu ref="ContextMenu"/>
-    <save-button ref="SaveButton"/>
+    <save-button ref="SaveButton" :visible="needSave"/>
 
     <login v-if="needLogin" :handler="loggedIn" class="backdrop-blur" />
 
@@ -73,6 +73,9 @@ export default {
     needLogin() {
       return this.$store.state.needLogin;
     },
+    needSave() {
+      return this.$store.state.bufferedChanges.length > 0;
+    }
   },
   components: {SaveButton, ContentBar, Login, Topbar, Sidebar, ContextMenu}
 }
