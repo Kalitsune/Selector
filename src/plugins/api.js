@@ -168,6 +168,34 @@ export default {
                 props.$store.state.lists.forEach(list => {
                     this.getListById(list.id);
                 })
+            },
+            updateList(list) {
+                //update the list on the api
+                return new Promise((resolve, reject) => {
+                    fetch(`/api/list/${list.id}`, {
+                        method: 'PATCH',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(list)
+                    }).then(response => {
+                        if (response.ok) {
+                            resolve();
+                        } else {
+                            reject(response.status);
+                        }
+                    })
+                })
+            },
+            commitChanges() {
+                //commit the changes to the api for every list in the store
+                props.$store.state.bufferedChanges.forEach(list_id => {
+                    //update the list in the db
+                    this.updateList(props.$store.state.lists.find(i=> i.id === list_id)).then(() => {
+                        //remove the list from the store
+                        props.$store.commit("removeUpdatedList", list_id);
+                    });
+                });
             }
         }
     },

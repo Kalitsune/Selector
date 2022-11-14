@@ -36,12 +36,16 @@ const store = createStore({
         updateList(state, list) {
             //replace the list in the lists array
             state.lists = state.lists.map(i => i.id === list.id ? list : i);
-        },
+            },
         addUpdatedList(state, list_id) {
             //add the list to the updated lists array so that it can be saved once the saved button is pressed
             if (!state.bufferedChanges.includes(list_id)) {
                 state.bufferedChanges.push(list_id);
             }
+        },
+        removeUpdatedList(state, list_id) {
+            //remove the list from the updated lists array
+            state.bufferedChanges = state.bufferedChanges.filter(i => i.id !== list_id);
         },
         setIsMobile(state, isMobile) {
             state.isMobile = isMobile;

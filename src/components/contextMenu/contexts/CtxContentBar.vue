@@ -25,7 +25,7 @@ export default {
       });
 
       //add the list to the buffer changes
-      this.$store.commit("addUpdatedList", this.list);
+      this.$store.commit("addUpdatedList", this.list.id);
     },
   }
 }
