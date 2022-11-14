@@ -167,8 +167,8 @@ func PatchList(ctx *fiber.Ctx) error {
 		return fiber.ErrBadRequest
 	}
 
-	// ensure that the id field is empty
-	list.Id = ""
+	// add the provided id to the list
+	list.Id = id
 	// Marshal the list to json
 	listData, err := list.ToJSON()
 	if err != nil {
@@ -186,7 +186,6 @@ func PatchList(ctx *fiber.Ctx) error {
 
 	api.Logger.Info.Printf("handling PATCH request to /api/list/%s - updated file with id: %s", id, list.Id)
 
-	list.Id = id
 	return ctx.JSON(list)
 }
 
