@@ -1,8 +1,8 @@
 <template>
 <!-- detect touch outside the context menu on every platform (mainly here for mobile devices) -->
-<div v-show="visible" class="w-screen h-screen block fixed top-0 left-0 z-40" @click="close()"/>
+<div v-show="visible && menu !== 'blank'" class="w-screen h-screen block fixed top-0 left-0 z-40" @click="close()"/>
 
-<div class="context-menu" :class="{'isMobile': isMobile}" v-show="visible" :style="style" ref="context" tabindex="0" @blur="close">
+<div class="context-menu" :class="{'isMobile': isMobile}" v-show="visible && menu !== 'blank'" :style="style" ref="context" tabindex="0" @blur="close">
   <p v-if="isMobile && list !== undefined" class="text-neutral-400 w-full">{{list.name}}</p>
   <slot :list="list">
     <!-- ../contextMenu/contexts/CtxSidebarItems.vue -->
@@ -13,7 +13,6 @@
 
     <!-- ../contextMenu/contexts/CtxSidebar.vue -->
     <context-menu-content-bar v-else-if="menu === 'contentBar'" :list="list"/>
-
   </slot>
 </div>
 </template>
@@ -88,8 +87,8 @@ export default {
       top: String,
       bottom: String,
       list: Object,
-      menu: "blank",
-      reversed: false,
+      menu: String,
+      reversed: Boolean,
     }
   }
 }
