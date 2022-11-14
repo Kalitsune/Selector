@@ -39,7 +39,9 @@ const store = createStore({
         },
         addUpdatedList(state, list_id) {
             //add the list to the updated lists array so that it can be saved once the saved button is pressed
-            state.bufferedChanges.push(list_id);
+            if (!state.bufferedChanges.includes(list_id)) {
+                state.bufferedChanges.push(list_id);
+            }
         },
         setIsMobile(state, isMobile) {
             state.isMobile = isMobile;
