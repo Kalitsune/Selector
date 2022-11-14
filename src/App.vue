@@ -2,7 +2,7 @@
   <div class="h-screen w-screen bg-neutral-200 dark:bg-neutral-800 overflow-hidden" @contextmenu="openContextMenu">
 
     <context-menu ref="ContextMenu"/>
-    <save-button ref="SaveButton" :visible="needSave"/>
+    <save-button ref="SaveButton" :cancel="cancelChanges" :save="saveChanges" :visible="needSave"/>
 
     <login v-if="needLogin" :handler="loggedIn" class="backdrop-blur" />
 
@@ -50,7 +50,17 @@ export default {
 
       //open the context menu
       this.$refs.ContextMenu.open({left, top, menu: "blank"});
-    }
+    },
+    cancelChanges() {
+      //cancel all changes
+      for (let list in this.$store.state.updatedLists) {
+        this.$api.getListById(list.id);
+      }
+    },
+    saveChanges() {
+      //save all changes
+      this.$api.commitChanges();
+    },
   },
   async mounted() {
     await this.$api.refreshLists();

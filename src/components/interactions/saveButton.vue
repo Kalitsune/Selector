@@ -16,12 +16,12 @@
   <!-- buttons -->
   <span class="justify-self-end flex flex-row">
     <!-- cancel button -->
-    <button class="text-primary-light-300 dark:text-primary-dark-700 font-semibold hover:underline pl-3 pr-8 md:pr-5">cancel</button>
+    <button @click="cancel()" class="text-primary-light-300 dark:text-primary-dark-700 font-semibold hover:underline pl-3 pr-8 md:pr-5">cancel</button>
 
     <!-- save button -->
     <span class="bg-primary-light-500 hover:bg-primary-light-600 text-primary-light-50 dark:bg-primary-dark-600 dark:hover:bg-primary-dark-700 dark:text-primary-dark-200 p-2 rounded font-semibold">
-      <button class="hidden lg:block  px-4">Save changes</button>
-      <button class="block lg:hidden  px-6">Save</button>
+      <button @click="save()" class="hidden lg:block  px-4">Save changes</button>
+      <button @click="save()" class="block lg:hidden  px-6">Save</button>
     </span>
   </span>
 </span>

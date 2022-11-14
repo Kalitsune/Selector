@@ -25,7 +25,7 @@ export default {
       if (this.$store.state.isMobile) {
         this.$root.toggleSidebar();
       }
-
+      
       //redirect to the new url by replacing the list parameter
       this.$router.push({name: "app", params: {listId: this.list.id, mode: this.$route.params.mode}});
     },
