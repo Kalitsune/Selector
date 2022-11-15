@@ -62,9 +62,8 @@ export default {
       this.$api.commitChanges();
     },
   },
-  async mounted() {
-    await this.$api.refreshLists();
-    await this.$api.cacheLists()
+  mounted() {
+    this.$api.refreshLists();
   },
   data() {
     return {

@@ -134,6 +134,10 @@ export default {
 
                     //populate the list
                     props.$store.commit("setLists", lists);
+
+                    //refresh the list into cache
+                    props.$api.cacheLists();
+
                 }).catch(statusCode => {
 
                     //if the user is not authenticated, popup the login page
