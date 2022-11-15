@@ -45,7 +45,7 @@ const store = createStore({
         },
         removeUpdatedList(state, list_id) {
             //remove the list from the updated lists array
-            state.bufferedChanges = state.bufferedChanges.filter(i => i.id !== list_id);
+            state.bufferedChanges = state.bufferedChanges.filter(i => i !== list_id);
         },
         setIsMobile(state, isMobile) {
             state.isMobile = isMobile;
