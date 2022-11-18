@@ -10,7 +10,7 @@
     <ul class="w-11/12">
       <!-- list content -->
       <li v-if="!isDisabled(list) && list?.elements?.length > 0" v-for="element in list.elements">
-        <ContentItem :element="element" />
+        <ContentItem :element="element" :list="list" />
       </li>
 
       <!-- if the list is empty -->
@@ -46,7 +46,7 @@ export default {
       event.stopPropagation();
 
       //open the context menu
-      this.$root.$refs.ContextMenu.open({left, top, list: this.list, menu: "contentBar"});
+      this.$root.$refs.ContextMenu.open({left, top, context: {list: this.list}, menu: "contentBar"});
     }
   },
   computed: {

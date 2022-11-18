@@ -3,16 +3,19 @@
 <div v-show="visible && menu !== 'blank'" class="w-screen h-screen block fixed top-0 left-0 z-40" @click="close()"/>
 
 <div class="context-menu" :class="{'isMobile': isMobile}" v-show="visible && menu !== 'blank'" :style="style" ref="context" tabindex="0" @blur="close">
-  <p v-if="isMobile && list !== undefined" class="text-neutral-400 w-full">{{list.name}}</p>
-  <slot :list="list">
+  <p v-if="isMobile && context.list !== undefined" class="text-neutral-400 w-full">{{context.list.name}}</p>
+  <slot :context="context">
     <!-- ../contextMenu/contexts/CtxSidebarItems.vue -->
-    <ContextMenuSidebarItems v-if="menu === 'sidebar_item'" :list="list"/>
+    <ContextMenuSidebarItems v-if="menu === 'sidebarItem'" :list="context.list"/>
 
     <!-- ../contextMenu/contexts/CtxSidebar.vue -->
     <context-menu-sidebar v-else-if="menu === 'sidebar'"/>
 
-    <!-- ../contextMenu/contexts/CtxSidebar.vue -->
-    <context-menu-content-bar v-else-if="menu === 'contentBar'" :list="list"/>
+    <!-- ../contextMenu/contexts/CtxContentBar.vue -->
+    <context-menu-content-bar v-else-if="menu === 'contentBar'" :list="context.list"/>
+
+    <!-- ../contextMenu/contexts/CtxContentItems.vue -->
+    <context-menu-content-items v-else-if="menu === 'contentBarItem'" :ctx="context"/>
   </slot>
 </div>
 </template>
@@ -22,10 +25,11 @@ import ContextMenuItem from "./ContextMenuItem.vue";
 import ContextMenuSidebarItems from "./contexts/CtxSidebarItems.vue";
 import ContextMenuSidebar from "./contexts/CtxSidebar.vue";
 import ContextMenuContentBar from "./contexts/CtxContentBar.vue";
+import ContextMenuContentItems from "./contexts/CtxContentItems.vue";
 
 export default {
   name: "ContextMenu",
-  components: {ContextMenuSidebar, ContextMenuSidebarItems, ContextMenuItem, ContextMenuContentBar},
+  components: {ContextMenuSidebar, ContextMenuSidebarItems, ContextMenuItem, ContextMenuContentBar, ContextMenuContentItems},
   methods: {
     close(condition) {
       //check if there are no conditions provided
@@ -44,7 +48,7 @@ export default {
       this.right = "auto";
       this.bottom = "auto";
       this.menu = evtData.menu;
-      this.list = evtData.list;
+      this.context = evtData.context;
 
       //wait for the element to render
       this.$nextTick(() => {
@@ -86,7 +90,7 @@ export default {
       right: String,
       top: String,
       bottom: String,
-      list: Object,
+      context: Object,
       menu: String,
       reversed: Boolean,
     }

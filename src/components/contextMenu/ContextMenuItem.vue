@@ -18,14 +18,10 @@ export default {
       this.$root.$refs.ContextMenu.close();
 
       //call the handler
-      this.handler(this.list);
+      this.handler();
     },
   },
   props: {
-    list: {
-      type: Object,
-      required: false,
-    },
     icon: String,
     text: String,
     tooltip: String,

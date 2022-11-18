@@ -1,6 +1,6 @@
 <template>
   <context-menu-item :handler="createElement" icon="fas fa-plus" text="Create" type="classic" tooltip="Créer un nouvel élément."/>
-  <context-menu-item :handler="() => $api.getListById(list.id)" icon="fas fa-arrows-rotate" text="Refresh" type="classic" tooltip="Actualiser un élément!"/>
+  <context-menu-item :handler="refreshList" icon="fas fa-arrows-rotate" text="Refresh" type="classic" tooltip="Actualiser un élément!"/>
 </template>
 
 <script>
@@ -10,10 +10,7 @@ export default {
   name: "CtxMenuSidebar",
   components: {ContextMenuItem},
   props: {
-    list: {
-      type: Object,
-      required: true,
-    }
+    list: Object,
   },
   methods: {
     createElement() {
@@ -26,6 +23,10 @@ export default {
 
       //add the list to the buffer changes
       this.$store.commit("addUpdatedList", this.list.id);
+    },
+    refreshList() {
+      //
+      this.$api.getListById(this.list.id)
     },
   }
 }

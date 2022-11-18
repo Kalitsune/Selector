@@ -1,5 +1,5 @@
 <template>
-  <button :class="{disabled: disabled}" class="background">
+  <button @contextmenu="openContextMenu" :class="{disabled: disabled}" class="background">
     <font-awesome-icon class="element h-6" icon="fa-solid fa-cube"/>
     <span class="element h-7">{{element.name}}</span>
   </button>
@@ -10,7 +10,22 @@ export default {
   name: "ContentItem",
   props: {
     element: Object,
+    list: Object,
     disabled: Boolean,
+  },
+  methods: {
+    openContextMenu(event) {
+      //get the coordinates of the click
+      let left = event.pageX || event.clientX;
+      let top = event.pageY || event.clientY;
+
+      //prevent the default context menu and prevent triggering other events
+      event.preventDefault();
+      event.stopPropagation();
+
+      //open the context menu
+      this.$root.$refs.ContextMenu.open({left, top, context: {element: this.element, list: this.list}, menu: "contentBarItem"});
+    }
   }
 }
 </script>
