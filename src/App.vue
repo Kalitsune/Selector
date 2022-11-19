@@ -53,9 +53,9 @@ export default {
     },
     cancelChanges() {
       //cancel all changes
-      for (let list in this.$store.state.updatedLists) {
-        this.$api.getListById(list.id);
-      }
+      this.$store.state.bufferedChanges.forEach((list_id) => {
+        this.$api.getListById(list_id);
+      });
     },
     saveChanges() {
       //save all changes
