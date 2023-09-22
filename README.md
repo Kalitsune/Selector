@@ -1,3 +1,7 @@
+# ⚠️ Archived ⚠️
+This project is too similar to [the wheel of names](https://wheelofnames.com/) which is much better with a lot of effects and features.
+
+
 # @Selector
 A vuejs website that helps you pick random people/thing when you're being too indecisive
 
